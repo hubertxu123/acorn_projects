@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinadrtv.taobao.common.dal.dao.PreTradeInventoryDao">
+
+	<select id="exist" parameterType="PreTradeInventory" resultType="java.lang.Boolean">
+		select 1 from pre_trade_inventory where outer_id = #{outerId}
+	</select>
+	
+	<insert id="insertData" parameterType="PreTradeInventory">
+		insert into pre_trade_inventory
+		  (num_iid, sku_id, outer_id, title, nick, trade_type, list_time, modified, create_date)
+		values
+		  (#{numIid, jdbcType=VARCHAR}, 
+		  #{skuId, jdbcType=VARCHAR}, 
+		  #{outerId, jdbcType=VARCHAR}, 
+		  #{title,  jdbcType=VARCHAR}, 
+		  #{nick,  jdbcType=VARCHAR}, 
+		  #{tradeType,  jdbcType=VARCHAR}, 
+		  #{listTime, jdbcType=TIMESTAMP}, 
+		  #{modified, jdbcType=TIMESTAMP}, 
+		  sysdate)
+	</insert>
+	
+	<update id="updateData" parameterType="PreTradeInventory">
+		update pre_trade_inventory
+		   set sku_id = #{skuId, jdbcType=VARCHAR},
+		       num_iid = #{numIid, jdbcType=VARCHAR},
+		       title = #{title,  jdbcType=VARCHAR},
+		       nick = #{nick,  jdbcType=VARCHAR},
+		       trade_type = #{tradeType,  jdbcType=VARCHAR},
+		       list_time = #{listTime, jdbcType=TIMESTAMP},
+		       modified = #{modified, jdbcType=TIMESTAMP},
+		       update_date = sysdate,
+		       update_num = #{updateNum, jdbcType=INTEGER}
+		 where outer_id = #{outerId}
+	</update>
+
+	<select id="querySyncList" parameterType="String" resultType="ItemStockSyncDto">
+		select pt.*, ptsk.active 
+		from pre_trade_inventory pt 
+		left join pre_trade_stopsync_skulist ptsk on pt.outer_id = ptsk.pluid
+		where pt.trade_type = #{tradeType}
+	</select>
+</mapper>
