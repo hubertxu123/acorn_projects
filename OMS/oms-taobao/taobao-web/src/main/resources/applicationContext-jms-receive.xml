@@ -180,6 +180,7 @@
                     <property name="tradeType" value="127"/>
                     <property name="tmsCode" value="107"/>
                     <property name="sourceId" value="9"/>
+                    <property name="syncStock" value="false"/>
                 </bean>
 
                 <bean class="com.chinadrtv.taobao.model.TaobaoOrderConfig">
@@ -202,7 +203,7 @@
                     <property name="tradeType" value="245"/>
                     <property name="tmsCode" value="107"/>
                     <property name="sourceId" value="2"/>
-                    <property name="syncStock" value="false"/>
+                    <property name="syncStock" value="true"/>
                 </bean>
 
                 <bean class="com.chinadrtv.taobao.model.TaobaoOrderConfig">
@@ -269,6 +270,7 @@
                     <property name="tradeType" value="253"/>
                     <property name="tmsCode" value="107"/>
                     <property name="sourceId" value="2"/>
+                    <property name="syncStock" value="false"/>
                 </bean>
                 <!-- 乐纷纷 -->
                 <bean class="com.chinadrtv.taobao.model.TaobaoOrderConfig">
@@ -280,7 +282,7 @@
                     <property name="tradeType" value="259"/>
                     <property name="tmsCode" value="107"/>
                     <property name="sourceId" value="2"/>
-                    <property name="syncStock" value="false"/>
+                    <property name="syncStock" value="true"/>
                 </bean>
                 <!-- 心享旗舰店 (生鲜店铺) -->
                 <bean class="com.chinadrtv.taobao.model.TaobaoOrderConfig">

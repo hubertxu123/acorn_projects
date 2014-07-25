@@ -8,7 +8,7 @@
 	
 	<insert id="insertData" parameterType="PreTradeInventory">
 		insert into pre_trade_inventory
-		  (num_iid, sku_id, outer_id, title, nick, trade_type, list_time, modified, create_date)
+		  (num_iid, sku_id, outer_id, title, nick, trade_type, list_time, modified, create_date, sync_type)
 		values
 		  (#{numIid, jdbcType=VARCHAR}, 
 		  #{skuId, jdbcType=VARCHAR}, 
@@ -18,20 +18,22 @@
 		  #{tradeType,  jdbcType=VARCHAR}, 
 		  #{listTime, jdbcType=TIMESTAMP}, 
 		  #{modified, jdbcType=TIMESTAMP}, 
-		  sysdate)
+		  sysdate,
+		  #{syncType})
 	</insert>
 	
 	<update id="updateData" parameterType="PreTradeInventory">
 		update pre_trade_inventory
 		   set sku_id = #{skuId, jdbcType=VARCHAR},
 		       num_iid = #{numIid, jdbcType=VARCHAR},
-		       title = #{title,  jdbcType=VARCHAR},
-		       nick = #{nick,  jdbcType=VARCHAR},
-		       trade_type = #{tradeType,  jdbcType=VARCHAR},
+		       title = #{title, jdbcType=VARCHAR},
+		       nick = #{nick, jdbcType=VARCHAR},
+		       trade_type = #{tradeType, jdbcType=VARCHAR},
 		       list_time = #{listTime, jdbcType=TIMESTAMP},
 		       modified = #{modified, jdbcType=TIMESTAMP},
 		       update_date = sysdate,
-		       update_num = #{updateNum, jdbcType=INTEGER}
+		       update_num = #{updateNum, jdbcType=INTEGER},
+		       sync_type = #{syncType, jdbcType=VARCHAR}
 		 where outer_id = #{outerId}
 	</update>
 
@@ -41,4 +43,11 @@
 		left join pre_trade_stopsync_skulist ptsk on pt.outer_id = ptsk.pluid
 		where pt.trade_type = #{tradeType}
 	</select>
+	
+	<update id="updateSynchronizedStock" parameterType="java.util.HashMap">
+		update pre_trade_inventory
+			set update_num = #{updateNum},
+			update_date = sysdate
+		where outer_id = #{outerId}
+	</update>
 </mapper>

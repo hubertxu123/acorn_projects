@@ -6,11 +6,11 @@
  */
 package com.chinadrtv.taobao.service.impl;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,6 +24,7 @@ import com.chinadrtv.taobao.common.dal.dao.StockSyncDao;
 import com.chinadrtv.taobao.common.dal.dto.ItemStockSyncDto;
 import com.chinadrtv.taobao.common.dal.dto.ProductSuiteDto;
 import com.chinadrtv.taobao.common.dal.model.PreTradeInventory;
+import com.chinadrtv.taobao.model.StockSyncTransferDto;
 import com.chinadrtv.taobao.model.TaobaoOrderConfig;
 import com.chinadrtv.taobao.service.StockSyncService;
 import com.chinadrtv.taobao.service.WmsTradeService;
@@ -107,6 +108,11 @@ public class StockSyncServiceImpl implements StockSyncService {
 		for(PreTradeInventory pti : ptis) {
 			Boolean exist = preTradeInventoryDao.exist(pti);
 			
+			if (null == pti.getOuterId() || "".equals(pti.getOuterId().trim())) {
+				logger.error("outerId is null " + pti);
+				continue;
+			}
+			
 			if (null == exist || !exist) {
 				preTradeInventoryDao.insertData(pti);
 			} else{
@@ -123,10 +129,11 @@ public class StockSyncServiceImpl implements StockSyncService {
 	 * @param configList
 	 * @see com.chinadrtv.taobao.service.StockSyncService#syncStockList(java.util.List)
 	 */ 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public void syncStockByShop(List<TaobaoOrderConfig> configList) {
 
-		ResponseEntity<PreTradeInventory[]> response = null;
+		ResponseEntity<Map[]> response = null;
 		
 		//Synchronizing by shop, large data may cause error.
 		for(TaobaoOrderConfig config : configList) {
@@ -139,23 +146,43 @@ public class StockSyncServiceImpl implements StockSyncService {
 				continue;
 			}
 			
-			Map<String, Object> paramMap = new HashMap<String, Object>();
-			paramMap.put("config", config);
-			paramMap.put("dataList", dataList);
+			StockSyncTransferDto transferDto = new StockSyncTransferDto();
+			transferDto.setConfig(config);
+			transferDto.setDataList(dataList);
 			
 			try {
 				logger.info("post url: " + cloudUrl + "/syncStockByItem");
 				logger.info("post paramaters: " + configList);
 				
-				response = restTemplate.postForEntity(cloudUrl + "/syncStockByItem", paramMap, PreTradeInventory[].class);;
+				response = restTemplate.postForEntity(cloudUrl + "/syncStockByItem", transferDto, Map[].class);
 				
 			} catch (RestClientException e) {
 				logger.error("post url error ", e);
 			}
 			
 			if(null != response && response.getStatusCode().value() == 200) {
-				PreTradeInventory[] ptis = response.getBody();
-				this.persist(ptis);
+				Map[] rsMap = response.getBody();
+				this.logProcess(rsMap);
+			}
+		}
+	}
+
+	/**
+	 * <p></p>
+	 * @param rsMap
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private void logProcess(Map[] rsMap) {
+		
+		for(Map<String, Object> map : rsMap) {
+			Boolean success = null == map.get("success") ? false : Boolean.parseBoolean(map.get("success").toString()); 
+			
+			if (success) {
+				try {
+					preTradeInventoryDao.updateSynchronizedStock(map);
+				} catch (Exception e) {
+					logger.error("rewrite synchronized stock failed ", e);
+				}
 			}
 		}
 	}
@@ -167,6 +194,7 @@ public class StockSyncServiceImpl implements StockSyncService {
 	 * @throws Exception 
 	 */
 	private List<ItemStockSyncDto> queryPraparedItemList(TaobaoOrderConfig config) {
+		
 		List<ItemStockSyncDto> dataList =  this.preTradeInventoryDao.querySyncList(config.getTradeType());
 		for (Iterator<ItemStockSyncDto> iter = dataList.iterator(); iter.hasNext();) {
 			ItemStockSyncDto dto = iter.next();
@@ -198,21 +226,26 @@ public class StockSyncServiceImpl implements StockSyncService {
 				//minus unconfirmed item of order.
 				currentStockQty -= this.queryUnConfirmedStockByItem(dto.getOuterId());
 				
-			//suite product, split item get minimum stock No as stock quantity	
+			//suite product, split item get minimum stock No. as stock quantity	
 			} else {
-				TreeMap<String, Long> configMap = new TreeMap<String, Long>();
+				Set<Long> set = new TreeSet<Long>();
 				for(ProductSuiteDto suiteDto : suiteDtoList) {
 					String itemId = suiteDto.getProdScmId();
+					Long prodNum = suiteDto.getProdNum();
 					Long tempStock = wmsTradeService.calcItemStock(itemId);
+					tempStock = tempStock / prodNum;
 					tempStock -= this.queryUnConfirmedStockByItem(itemId);
-					configMap.put(suiteDto.getProdScmId(), tempStock);
+					
+					set.add(tempStock);
 				}
 				
-				currentStockQty = configMap.get(configMap.firstKey());
+				Long[] stockArr = new Long[suiteDtoList.size()];
+				stockArr = set.toArray(stockArr);
+				currentStockQty = stockArr[0];
 			}
 			
 			if (currentStockQty < 0) {
-				throw new RuntimeException("stock can't be minus");
+				currentStockQty = 0L;
 			}
 			
 			dto.setCurrentStockQty(currentStockQty);

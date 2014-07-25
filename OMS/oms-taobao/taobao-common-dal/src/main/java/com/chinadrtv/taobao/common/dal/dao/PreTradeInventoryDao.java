@@ -7,6 +7,7 @@
 package com.chinadrtv.taobao.common.dal.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.chinadrtv.common.dal.BaseDao;
 import com.chinadrtv.taobao.common.dal.dto.ItemStockSyncDto;
@@ -45,4 +46,10 @@ public interface PreTradeInventoryDao extends BaseDao<PreTradeInventory> {
 	 */
 	List<ItemStockSyncDto> querySyncList(String tradeType);
 
+
+	/**
+	 * <p></p>
+	 * @param outerId
+	 */
+	void updateSynchronizedStock(Map<String, Object> params);
 }

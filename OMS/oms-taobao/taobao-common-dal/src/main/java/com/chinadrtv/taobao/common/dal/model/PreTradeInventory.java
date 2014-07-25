@@ -40,6 +40,7 @@ public class PreTradeInventory implements Serializable {
 	private Date createDate;
 	private Date updateDate;
 	private Long updateNum;
+	private String syncType;
 	
 	public String getNumIid() {
 		return numIid;
@@ -101,6 +102,19 @@ public class PreTradeInventory implements Serializable {
 	public void setUpdateNum(Long updateNum) {
 		this.updateNum = updateNum;
 	}
+	public String getSkuId() {
+		return skuId;
+	}
+	public void setSkuId(String skuId) {
+		this.skuId = skuId;
+	}
+	public String getSyncType() {
+		return syncType;
+	}
+	public void setSyncType(String syncType) {
+		this.syncType = syncType;
+	}
+	
 	/** 
 	 * <p>Title: toString</p>
 	 * <p>Description: </p>
@@ -111,13 +125,8 @@ public class PreTradeInventory implements Serializable {
 	public String toString() {
 		return "PreTradeInventory [numIid=" + numIid + ", skuId=" + skuId + ", outerId=" + outerId + ", title=" + title
 				+ ", nick=" + nick + ", tradeType=" + tradeType + ", listTime=" + listTime + ", modified=" + modified
-				+ ", createDate=" + createDate + ", updateDate=" + updateDate + ", updateNum=" + updateNum + "]";
-	}
-	public String getSkuId() {
-		return skuId;
-	}
-	public void setSkuId(String skuId) {
-		this.skuId = skuId;
+				+ ", createDate=" + createDate + ", updateDate=" + updateDate + ", updateNum=" + updateNum
+				+ ", syncType=" + syncType + "]";
 	}
 	
 }

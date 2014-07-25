@@ -55,7 +55,8 @@ public class ItemStockSyncDto extends PreTradeInventory{
 				+ ", title=" + this.getTitle() + ", nick=" + this.getNick() + ", tradeType=" + this.getTradeType() 
 				+ ", listTime=" + this.getListTime() + ", modified=" + this.getModified()
 				+ ", createDate=" + this.getCreateDate() + ", updateDate=" + this.getUpdateDate() 
-				+ ", updateNum=" + this.getUpdateNum() + "active=" + active + ", currentStockQty=" + currentStockQty + "]";
+				+ ", updateNum=" + this.getUpdateNum() + ", active=" + active 
+				+ ", currentStockQty=" + currentStockQty+ ", syncType=" + this.getSyncType() + "]" ;
 	}
 	
 }

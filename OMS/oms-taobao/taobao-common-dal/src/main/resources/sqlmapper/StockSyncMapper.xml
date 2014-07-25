@@ -15,7 +15,7 @@
 		  from pre_trade aa, pre_trade_detail bb
 		 where aa.trade_id = bb.trade_id
 		   and shipment_id is null
-		   and trade_type in (111, 127, 98)
+		   and trade_type in ('111', '127', '98')
 		   and bb.out_sku_id = #{itemId}
 		   and aa.imp_status is null
 	</select>
@@ -24,5 +24,5 @@
 		select 1 from plubasinfo p
 		where p.plucode = #{itemId}
 	</select>
-	
+
 </mapper>

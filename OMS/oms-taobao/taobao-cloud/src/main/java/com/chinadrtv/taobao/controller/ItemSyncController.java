@@ -97,6 +97,9 @@ public class ItemSyncController {
 			ptic.setListTime(item.getListTime());
 			ptic.setModified(item.getModified());
 			ptic.setTradeType(config.getTradeType());
+			ptic.setSyncType("2");
+			
+			rsList.add(ptic);
 			
 			logger.info("loaded raw data: ", ptic);
 		} else {
@@ -148,6 +151,7 @@ public class ItemSyncController {
 			ptic.setListTime(item.getListTime());
 			ptic.setModified(item.getModified());
 			ptic.setTradeType(config.getTradeType());
+			ptic.setSyncType("1");
 			
 			rsList.add(ptic);
 			

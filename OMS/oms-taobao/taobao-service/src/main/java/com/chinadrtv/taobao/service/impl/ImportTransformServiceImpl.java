@@ -40,6 +40,8 @@ public class ImportTransformServiceImpl implements ImportTransformService {
     private final String NO_INVOICE_ORDER_TYPE_127 = "127" ;
     private final String NO_INVOICE_START_DATE = "2013-04-01" ;
     private final String NO_INVOICE_ORDER_TYPE_98 = "98" ;
+    private final String INVOICE_ORDER_TYPE_238 = "238" ;
+    
 
     private Smooks smooks=null;
     
@@ -123,10 +125,6 @@ public class ImportTransformServiceImpl implements ImportTransformService {
 						} else {
 							trade.setInvoiceComment("1");
 						}
-						// 附加属性设置
-						trade.setSourceId(taobaoOrderConfig.getSourceId().longValue());
-						// trade.setCustomerId(taobaoConfig.getCustomerId());
-						trade.setTradeType(taobaoOrderConfig.getTradeType());
 						// 针对127订单类型，做无发票处理，其实日期2013-04-01
 						if (NO_INVOICE_ORDER_TYPE_127.equals(trade.getTradeType())
 								&& trade.getOutCrdt().after(getDateStart(NO_INVOICE_START_DATE))) {
@@ -137,6 +135,17 @@ public class ImportTransformServiceImpl implements ImportTransformService {
 							trade.setInvoiceComment("0");
 							trade.setInvoiceTitle("不需要开具发票");
 						}
+						if (INVOICE_ORDER_TYPE_238.equals(trade.getTradeType())) {
+							trade.setInvoiceComment("1");
+							if(null == trade.getInvoiceTitle() || "".equals(trade.getInvoiceTitle().trim())) {
+								trade.setInvoiceTitle("个人");
+							}
+						}
+
+						// 附加属性设置
+						trade.setSourceId(taobaoOrderConfig.getSourceId().longValue());
+						// trade.setCustomerId(taobaoConfig.getCustomerId());
+						trade.setTradeType(taobaoOrderConfig.getTradeType());
 						// trade.setTmsCode(taobaoConfig.getTmsCode());
 						trade.setCrdt(new Date());
 						
