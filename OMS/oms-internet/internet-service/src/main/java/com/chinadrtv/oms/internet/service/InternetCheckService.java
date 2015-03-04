@@ -13,10 +13,6 @@ import com.chinadrtv.oms.internet.dto.OpsTradeResponseDto;
  */
 public interface InternetCheckService {
 
-	// smooks转换xml文件到PreTrademap对象中
-	@Deprecated
-	List<OpsTradeDto> getOrderInfo(String txml);
-
 	// 转换listmap的值到ListPretare
 	List<PreTradeDto> getPretrademapto(List<OpsTradeDto> trademapList);
 

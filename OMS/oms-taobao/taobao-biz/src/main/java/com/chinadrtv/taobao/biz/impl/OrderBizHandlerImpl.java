@@ -78,9 +78,18 @@ public class OrderBizHandlerImpl implements OrderBizHandler {
 					logger.error("no taobao config");
 				} else {
 					for (TaobaoOrderConfig taobaoOrderConfig : taobaoOrderConfigList) {
+						
 						List<TradeFeedback> tradeFeedbackList = orderFeedbackFetchService.searchOrderByType(taobaoOrderConfig.getTradeType());
 						if (tradeFeedbackList != null && tradeFeedbackList.size() > 0) {
 							this.feedbackList(taobaoOrderConfig, tradeFeedbackList);
+						}
+						
+						//处理冷链订单265类型订单
+						if(taobaoOrderConfig.getTradeType().equals("259")) {
+							List<TradeFeedback> rawFoodtradeFeedbackList = orderFeedbackFetchService.searchOrderByType("265");
+							if (rawFoodtradeFeedbackList != null && rawFoodtradeFeedbackList.size() > 0) {
+								this.feedbackList(taobaoOrderConfig, rawFoodtradeFeedbackList);
+							}
 						}
 					}
 				}

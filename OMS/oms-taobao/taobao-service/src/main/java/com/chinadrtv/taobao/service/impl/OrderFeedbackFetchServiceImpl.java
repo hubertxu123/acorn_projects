@@ -1,13 +1,15 @@
 package com.chinadrtv.taobao.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.chinadrtv.model.oms.PreTrade;
 import com.chinadrtv.taobao.common.dal.dao.TradeFeedbackDao;
 import com.chinadrtv.taobao.common.dal.model.TradeFeedback;
 import com.chinadrtv.taobao.service.OrderFeedbackFetchService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * Created with (TC).
@@ -24,7 +26,21 @@ public class OrderFeedbackFetchServiceImpl implements OrderFeedbackFetchService 
 
     @Override
     public List<TradeFeedback> searchOrderByType(String orderType) {
-        return tradeFeedbackDao.findFeedbacks(orderType);
+    	
+    	List<TradeFeedback> dataList = tradeFeedbackDao.findFeedbacks(orderType);
+    	
+    	//Raw food trade
+    	List<TradeFeedback> tempList = tradeFeedbackDao.queryRawTradeFeedback(orderType);
+    	
+    	if(null == dataList) {
+    		dataList = new ArrayList<TradeFeedback>();
+    	}
+    	
+    	if(null != tempList && tempList.size() != 0) {
+    		dataList.addAll(tempList);
+    	}
+    	
+        return dataList;
     }
 
     @Override

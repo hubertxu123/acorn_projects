@@ -72,13 +72,11 @@ public class OrderImportServiceTest extends TestCase {
 		cfgList = (List<AmazonOrderConfig>) applicationContext.getBean("cfgList");
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		Date originalDate = sdf.parse("2014-03-01 00:00:00");
-		Date today = new Date();
+		Date originalDate = sdf.parse("2014-10-26 00:00:00");
+		Date today = sdf.parse("2014-10-27 10:00:00");
 		
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(originalDate);
-		//int diff = (new Date() - originalDate) /3600/24; //calendar.get(Calendar.DAY_OF_YEAR);
-		//calendar.add(Calendar.DATE, -diff);
 		
 		Date beginDate = calendar.getTime();
 		calendar.add(Calendar.DATE, 1);
@@ -86,9 +84,6 @@ public class OrderImportServiceTest extends TestCase {
 		
 		try {
 			while(endDate.before(today)) {
-				/*if(sdf.format(beginDate).equals("2014-03-06 00:00:00") && sdf.format(endDate).equals("2014-03-07 00:00:00")) {
-					continue;
-				}*/
 				
 				logger.error("beginDate: " + sdf.format(beginDate) + "\t endDate: " + sdf.format(endDate));
 				
@@ -98,7 +93,7 @@ public class OrderImportServiceTest extends TestCase {
 				endDate = calendar.getTime();
 				
 				try {
-					Thread.sleep(60 * 1000);
+					Thread.sleep(200 * 1000);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -106,7 +101,6 @@ public class OrderImportServiceTest extends TestCase {
 		} catch (Exception e) {
 			logger.error("beginDate: " + sdf.format(beginDate) + "\t endDate: " + sdf.format(endDate));
 			e.printStackTrace();
-			//throw e;
 		}
 		
 		

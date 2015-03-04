@@ -54,63 +54,47 @@
 
     <profiles>
         <profile>
-            <id>dev</id>
+            <id>product</id>
             <properties>
-                <env>dev</env>
+                <package.environment>product</package.environment>
             </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
         </profile>
         <profile>
             <id>uat</id>
             <properties>
-                <env>uat</env>
+                <package.environment>uat</package.environment>
             </properties>
         </profile>
         <profile>
-            <id>prod</id>
+            <id>dev</id>
             <properties>
-                <env>prod</env>
+                <package.environment>dev</package.environment>
             </properties>
-            <!--<activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>-->
         </profile>
         <profile>
             <id>test</id>
             <properties>
-                <env>test</env>
+                <package.environment>test</package.environment>
             </properties>
         </profile>
     </profiles>
 
     <build>
         <finalName>yihaodian-web</finalName>
-
         <plugins>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.4</version>
-
-                <configuration>
-                    <filters>
-                        <filter>${basedir}/src/main/filter/${env}.properties</filter>
-                    </filters>
-
-                    <webResources>
-                        <resource>
-                            <directory>src/main/resources</directory>
-                            <filtering>true</filtering>
+				<configuration>
+					<webResources>
+						<resource>
+                            <directory>src/main/resources/${package.environment}</directory>
                             <targetPath>WEB-INF/classes</targetPath>
-                            <includes>
-                                <include>env.properties</include>
-                            </includes>
+                            <filtering>true</filtering>
                         </resource>
-                    </webResources>
-                </configuration>
+					</webResources>
+				</configuration>
             </plugin>
         </plugins>
     </build>

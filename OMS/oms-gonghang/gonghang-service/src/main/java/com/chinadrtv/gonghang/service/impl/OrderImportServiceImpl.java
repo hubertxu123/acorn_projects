@@ -80,6 +80,10 @@ public class OrderImportServiceImpl implements OrderImportService {
 		for(OrderConfig config : configList) {
 			List<OrderHeaderDto> orderHeaderList = this.postOrderHeader(config, startDate, endDate);
 			
+			if(null == orderHeaderList || orderHeaderList.size() == 0) {
+				continue;
+			}
+			
 			PreTradeLotDto preTradeLotDto = this.postOrderDetailList(config, orderHeaderList);
 			
 			if(null != preTradeLotDto) {
@@ -135,7 +139,7 @@ public class OrderImportServiceImpl implements OrderImportService {
 						 "<create_end_time>" + sdf.format(endDate) + "</create_end_time>" +
 						 "<modify_time_from></modify_time_from>" +
 						 "<modify_time_to></modify_time_to>" +
-						 "<order_status>01</order_status>" +
+						 "<order_status>02</order_status>" +
 						 "</body>";
 		
 		String requestUrl = EncryptUtil.generateRequestUrl(config, method, reqData);
@@ -154,11 +158,8 @@ public class OrderImportServiceImpl implements OrderImportService {
     	}
 		
 		String content = new String(response.getBody().getBytes("ISO-8859-1"), "UTF-8");
+		logger.debug(content);
 		
-		content = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><response><head><method>icbcb2c.order.list</method><req_sid>20130508000000001</req_sid><version>1.0</version><timestamp>123111111111</timestamp><app_key>10100011</app_key><auth_code>AfcdE</auth_code><ret_code>00000000</ret_code><ret_msg>OK</ret_msg><sign>581149147A@#%^ASDFQEQW</sign></head><body><order_list><order><order_id>12312312312</order_id><order_create_time>2013-12-12 10:00:00</order_create_time><order_modify_time>2013-12-12 10:00:00</order_modify_time><order_status>01</order_status></order></order_list></body></response>";
-		
-		logger.debug("post content: " + content);
-			
 		List<OrderHeaderDto> orderHeaderList = this.orderHeaderAdapter(content);
 		
 		return orderHeaderList;
@@ -220,8 +221,9 @@ public class OrderImportServiceImpl implements OrderImportService {
     	}
 		
 		String content = new String(response.getBody().getBytes("ISO-8859-1"), "UTF-8");
+		logger.debug(content);
 		
-		PreTradeDto preTradeDto = this.preTradeDtoAdapter(content);
+		PreTradeDto preTradeDto = this.preTradeDtoAdapter(config, content);
 		
 		return preTradeDto;
 	}
@@ -232,7 +234,7 @@ public class OrderImportServiceImpl implements OrderImportService {
 	 * @return
 	 * @throws Exception 
 	 */
-	private PreTradeDto preTradeDtoAdapter(String content) throws Exception {
+	private PreTradeDto preTradeDtoAdapter(OrderConfig config, String content) throws Exception {
 		ExecutionContext executionContext = smooks.createExecutionContext();
 		JavaResult result = new JavaResult();
 
@@ -249,7 +251,7 @@ public class OrderImportServiceImpl implements OrderImportService {
 		if(null == orderHeaderDto) {
 			return null;
 		}
-		PreTradeDto preTradeDto = this.preTradeDtoAdapter(orderHeaderDto);
+		PreTradeDto preTradeDto = this.preTradeDtoAdapter(config, orderHeaderDto);
 		
 		return preTradeDto;
 	}
@@ -259,75 +261,65 @@ public class OrderImportServiceImpl implements OrderImportService {
 	 * @param orderHeaderDto
 	 * @return
 	 */
-	private PreTradeDto preTradeDtoAdapter(OrderHeaderDto orderHeaderDto) {
-		PreTradeDto preTradeDto = new PreTradeDto();
+	private PreTradeDto preTradeDtoAdapter(OrderConfig config, OrderHeaderDto orderHeaderDto) {
+		StringBuffer sb = new StringBuffer();
+		//Double discountFee = 0D;
 		
-		//preTradeDto.setAdvFee(advFee);
-		//preTradeDto.setAlipayTradeId();
-		//preTradeDto.setBuyerAlipayId();
+		PreTradeDto preTradeDto = new PreTradeDto();
+	
 		preTradeDto.setBuyerId(orderHeaderDto.getOrderBuyerId());
 		preTradeDto.setBuyerMessage(orderHeaderDto.getOrderBuyerRemark());
 		preTradeDto.setBuyerNick(orderHeaderDto.getOrderBuyerName());
-		//preTradeDto.setComisssionFee(comisssionFee);
-		preTradeDto.setCrdt(new Date());
-		preTradeDto.setCreateDate(new Date());
-		//preTradeDto.setCreditFee(creditFee);
-		//preTradeDto.setCustomerId(customerId);
-		//preTradeDto.setDiscountFee(discountFee);
-		//preTradeDto.setErrMsg(errMsg);
-		/*
-		preTradeDto.setFeedbackDate(feedbackDate);
-		preTradeDto.setFeedbackMessageId(feedbackMessageId);
-		preTradeDto.setFeedbackRetryCount(feedbackRetryCount);
-		preTradeDto.setFeedbackStatus(feedbackStatus);
-		preTradeDto.setFeedbackStatusRemark(feedbackStatusRemark);
-		preTradeDto.setFeedbackSubmissionId(feedbackSubmissionId);
-		preTradeDto.setFeedbackUser(feedbackUser);
-		preTradeDto.setImpDate(impDate);
-		preTradeDto.setImpStatus(impStatus);
-		preTradeDto.setImpStatusRemark(impStatusRemark);
-		preTradeDto.setImpUser(impUser);
-		*/
-		//preTradeDto.setInfo(info);
-		preTradeDto.setInvoiceComment(orderHeaderDto.getInvoiceContent());
-		preTradeDto.setInvoiceTitle(orderHeaderDto.getInvoiceTitle());
-		//preTradeDto.setIsApproval(isApproval);
-		//preTradeDto.setIsStat(isStat);
-		//preTradeDto.setIsValid(isValid);
-		//preTradeDto.setJhsFee(jhsFee);
+		
+		String invoiceTitle = orderHeaderDto.getInvoiceTitle();
+		String invoiceComment = "";
+		if(null != invoiceTitle && invoiceTitle.equals("无")) {
+			invoiceComment = "0";
+		}else{
+			invoiceComment = "2";
+		}
+		preTradeDto.setInvoiceComment(invoiceComment);
+		preTradeDto.setInvoiceTitle(invoiceTitle);
+		
 		preTradeDto.setMailType(orderHeaderDto.getOrderChannel());
+		preTradeDto.setTradeId(orderHeaderDto.getOrderId());
 		preTradeDto.setOpsTradeId(orderHeaderDto.getOrderId());
-		//preTradeDto.setOrdermoney(orderHeaderDto.getOrderAmount().doubleValue());
 		preTradeDto.setOutCrdt(orderHeaderDto.getOrderCreateTime());
-		preTradeDto.setPayment(orderHeaderDto.getOrderPayAmount().doubleValue());
-		preTradeDto.setPaytype(orderHeaderDto.getOrderPaySys());
-		//preTradeDto.setPlateformCommissionFee(plateformCommissionFee);
+		
 		preTradeDto.setReceiverAddress(orderHeaderDto.getConsigneeAddress());
-		preTradeDto.setReceiverarea(orderHeaderDto.getConsigneeDistrict());
-		preTradeDto.setReceiverArea(orderHeaderDto.getConsigneeDistrict());
 		preTradeDto.setReceiverCity(orderHeaderDto.getConsigneeCity());
-		//preTradeDto.setReceiverCounty(receiverCounty);
+		preTradeDto.setReceiverCounty(orderHeaderDto.getConsigneeDistrict());
 		preTradeDto.setReceiverMobile(orderHeaderDto.getMobile());
-		preTradeDto.setReceiverName(orderHeaderDto.getOrderBuyerName());
+		preTradeDto.setReceiverName(orderHeaderDto.getConsigneeName());
 		preTradeDto.setReceiverPhone(orderHeaderDto.getPhone());
 		preTradeDto.setReceiverPostCode(orderHeaderDto.getZipcode());
 		preTradeDto.setReceiverProvince(orderHeaderDto.getConsigneeProvince());
-		/*
-		preTradeDto.setRefundDate(refundDate);
-		preTradeDto.setRefundStatus(refundStatus);
-		preTradeDto.setRefundStatusConfirm(refundStatusConfirm);
-		preTradeDto.setRefundStatusConfirmDate(refundStatusConfirmDate);
-		preTradeDto.setRefundStatusConfirmUser(refundStatusConfirmUser);
-		*/
-		//preTradeDto.setRemark(remark);
-		//preTradeDto.setRetailerCommissionFee(retailerCommissionFee);
-		//preTradeDto.setRevenue(revenue);
 		preTradeDto.setSellerMessage(orderHeaderDto.getOrderBuyerRemark());
-		//preTradeDto.setSendinfo(sendinfo);
-		//FIXME
-		//preTradeDto.setShippingFee(shippingFee);
-		//preTradeDto.setShippingType(shippingType);
-		preTradeDto.setSourceId(24L);
+		
+		Double orderAmount = orderHeaderDto.getOrderAmount().doubleValue();
+		BigDecimal orderOtherDiscount = orderHeaderDto.getOrderOtherDiscount();
+		
+		if(null != orderHeaderDto.getOrderCouponAmount() && 0 != orderHeaderDto.getOrderCouponAmount().doubleValue()) {
+			sb.append("电子券抵扣" + orderHeaderDto.getOrderCouponAmount().doubleValue() + "; ");
+		}
+		if(null != orderHeaderDto.getOrderCreditAmount() && 0 != orderHeaderDto.getOrderCreditAmount().doubleValue()) {
+			sb.append("积分抵扣" + orderHeaderDto.getOrderCreditAmount() + "; ");
+		}
+		if(null != orderOtherDiscount && orderOtherDiscount.doubleValue() != 0) {
+			sb.append("其它优惠" + orderOtherDiscount.doubleValue() + "; ");
+			orderAmount -= orderOtherDiscount.doubleValue();
+		}
+		preTradeDto.setPayment(orderAmount);
+		preTradeDto.setShippingFee(orderHeaderDto.getOrderFreight().doubleValue());
+
+		preTradeDto.setCustomerId(config.getCustomerId());
+		preTradeDto.setSourceId(config.getSourceId());
+		preTradeDto.setTradeType(config.getTradeType());
+		preTradeDto.setTradeFrom(config.getTradeFrom());
+		preTradeDto.setTmsCode(config.getTmsCode());
+		
+		sb.append("可开票金额" + orderHeaderDto.getOrderPayAmount().doubleValue());
+		preTradeDto.setBuyerMessage(sb.toString());
 		
 		List<PreTradeDetail> preTradeDetails = new ArrayList<PreTradeDetail>();
 		
@@ -337,17 +329,15 @@ public class OrderImportServiceImpl implements OrderImportService {
 			BigDecimal qty =  new BigDecimal(orderDetailDto.getProductNumber());
 			BigDecimal payment = (BigDecimal) (null == orderDetailDto.getProductPrice() ? 0 :orderDetailDto.getProductPrice().multiply(qty));
 			
-			pd.setIsActive(true);
-			pd.setIsValid(true);
-			pd.setItemId(orderDetailDto.getProductSkuId());
-			pd.setOutItemId(String.valueOf(orderDetailDto.getProductSkuId()));
-			
+			pd.setTradeId(orderHeaderDto.getOrderId());
 			pd.setPayment(payment.doubleValue());
 			pd.setPrice(null == orderDetailDto.getProductPrice() ? 0 : orderDetailDto.getProductPrice().doubleValue());
+			pd.setUpPrice(orderDetailDto.getProductPrice().doubleValue() - orderDetailDto.getProductDiscount().doubleValue());
 			pd.setQty(orderDetailDto.getProductNumber());
-			pd.setSkuId(orderDetailDto.getProductSkuId());
+			pd.setSkuId(Long.parseLong(orderDetailDto.getProductSkuId()));
+			pd.setOutSkuId(orderDetailDto.getProductCode());
 			pd.setSkuName(orderDetailDto.getProductName());
-			//pd.setSourcePreTradeDetailId(sourcePreTradeDetailId);
+			pd.setDiscountFee(orderDetailDto.getProductDiscount().doubleValue());
 			
 			preTradeDetails.add(pd);
 		}

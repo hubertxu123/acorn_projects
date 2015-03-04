@@ -4,6 +4,7 @@
 
 	<select id="exist" parameterType="PreTradeInventory" resultType="java.lang.Boolean">
 		select 1 from pre_trade_inventory where outer_id = #{outerId}
+		and trade_type = #{tradeType}
 	</select>
 	
 	<insert id="insertData" parameterType="PreTradeInventory">
@@ -28,13 +29,13 @@
 		       num_iid = #{numIid, jdbcType=VARCHAR},
 		       title = #{title, jdbcType=VARCHAR},
 		       nick = #{nick, jdbcType=VARCHAR},
-		       trade_type = #{tradeType, jdbcType=VARCHAR},
 		       list_time = #{listTime, jdbcType=TIMESTAMP},
 		       modified = #{modified, jdbcType=TIMESTAMP},
 		       update_date = sysdate,
 		       update_num = #{updateNum, jdbcType=INTEGER},
 		       sync_type = #{syncType, jdbcType=VARCHAR}
 		 where outer_id = #{outerId}
+		 and trade_type = #{tradeType}
 	</update>
 
 	<select id="querySyncList" parameterType="String" resultType="ItemStockSyncDto">
@@ -49,5 +50,6 @@
 			set update_num = #{updateNum},
 			update_date = sysdate
 		where outer_id = #{outerId}
+		and trade_type = #{tradeType}
 	</update>
 </mapper>

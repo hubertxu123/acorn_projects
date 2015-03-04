@@ -63,6 +63,8 @@ public class InternetOrderInputController {
 			responseDto = internetService.importOrderList(opsTradeRequest);
 			
 			requestSuccess = true;
+			responseDto.setResult(true);
+			responseDto.setAgent_trade_id("");
 			
 		} catch (Exception e) {
 			logger.error("controller error", e);
@@ -70,6 +72,8 @@ public class InternetOrderInputController {
 		
 		if(!requestSuccess) {
 			responseDto = new OpsTradeResponseDto();
+			responseDto.setResult(false);
+			responseDto.setAgent_trade_id("");
 			responseDto.setMessage_code("012");
 			responseDto.setMessage("系统异常, 请检查输入参数是否正确");
 		}

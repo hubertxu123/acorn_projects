@@ -53,9 +53,9 @@ public class FeedbackService {
 	 */
 	public void rawTradeFeedback(TradeStatusModel tradeStatusModel) throws Exception {
 		
-		logger.info("Feedback Raw Order.");
+		logger.info("Feedbacking the raw trade.");
 
-		TradeFeedback tradeFeedback = tradeStatusModel.getTradefeedback();
+		//TradeFeedback tradeFeedback = tradeStatusModel.getTradefeedback();
 		
 		String status = this.queryTradeStatus(tradeStatusModel);
 		
@@ -123,6 +123,8 @@ public class FeedbackService {
 	 * @return
 	 * @throws Exception 
 	 */
+	@SuppressWarnings("unused")
+	@Deprecated
 	private Long createRawTrade(TradeStatusModel tradeStatusModel) throws Exception {
 		
 		TaobaoOrderConfig config = tradeStatusModel.getTaobaoOrderConfig();

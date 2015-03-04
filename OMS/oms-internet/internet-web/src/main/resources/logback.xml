@@ -23,6 +23,7 @@
     
     <logger name="com.chinadrtv.oms.internet.dal.dao" level="TRACE" />
     <logger name="com.chinadrtv.dal.oms.dao" level="TRACE" />
+    <logger name="com.chinadrtv.oms.internet" level="INFO" />
     
     <root>
         <level value="ERROR" />

@@ -112,6 +112,7 @@ public class StockSyncController {
 			Map<String, Object> rsMap = new HashMap<String, Object>();
 			rsMap.put("outerId", dto.getOuterId());
 			rsMap.put("success", true);
+			rsMap.put("tradeType", dto.getTradeType());
 			rsMap.put("updateNum", dto.getCurrentStockQty());
 			
 			logger.info("stock synchronize success " + rsMap);

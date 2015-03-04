@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Reference Manual http://logback.qos.ch/manual/index.html -->
-
 <configuration>
 
     <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
@@ -25,8 +23,8 @@
             </pattern>
         </encoder>
     </appender>
-
-    <logger name="com.chinadrtv.taobao">
+    
+    <logger name="com.chinadrtv">
         <level value="INFO" />
     </logger>
     

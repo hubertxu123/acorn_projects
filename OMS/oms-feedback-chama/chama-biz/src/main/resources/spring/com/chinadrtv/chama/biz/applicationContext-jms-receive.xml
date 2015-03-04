@@ -21,7 +21,7 @@
     <bean id="systemConfig" class="com.chinadrtv.common.context.SystemContext">
         <property name="SystemMap">
             <map>
-                <entry key="brokerURL" value="${env_jms_server_url}"/>
+                <entry key="brokerURL" value="${jms_server_url}"/>
             </map>
         </property>
     </bean>

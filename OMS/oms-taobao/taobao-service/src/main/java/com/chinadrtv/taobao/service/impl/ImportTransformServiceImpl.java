@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -78,8 +79,8 @@ public class ImportTransformServiceImpl implements ImportTransformService {
 					
 					for (PreTradeDto trade : list) {
 						
-						//只有乐纷纷店拆单
-						if("259".equals(taobaoOrderConfig.getTradeType())) {
+						//处理拆单权限的店铺
+						if(null != taobaoOrderConfig.getSplitOrder() && taobaoOrderConfig.getSplitOrder()) {
 							//拆单匹配
 							Set<Integer> splitSet = new HashSet<Integer>();
 							
@@ -101,6 +102,11 @@ public class ImportTransformServiceImpl implements ImportTransformService {
 										detail.setWarehouseType(preTradeItem.getWarehouseType());
 										detail.setItemTradeType(preTradeItem.getItemTradeType());
 										detail.setItemTmsCode(preTradeItem.getItemTmsCode());
+									}else {
+										splitSet.add(1);
+										detail.setWarehouseType(1);
+										detail.setItemTradeType(taobaoOrderConfig.getTradeType());
+										detail.setItemTmsCode("12345");
 									}	
 								}
 							}
@@ -108,6 +114,24 @@ public class ImportTransformServiceImpl implements ImportTransformService {
 							//拆分子订单数量
 							Integer splitNum = splitSet.size();
 							trade.setSplitFlag(splitNum);
+							
+							//将pre_trade_item 表配置的单品数据订单归为配置订单类型
+							if(splitNum == 1) {
+								Integer warehouseType = null;
+								for(Iterator<Integer> iter = splitSet.iterator(); iter.hasNext();) {
+									warehouseType = iter.next();
+								}
+								
+								String headerTradeType = null;
+								for(PreTradeDetail detail : detailList) {
+									if(warehouseType == detail.getWarehouseType()) {
+										headerTradeType = detail.getItemTradeType();
+										break;
+									}
+								}
+								
+								trade.setTradeType(headerTradeType);
+							}
 						}else{
 							// 处理前置订单明细skuId为空问题
 							List<PreTradeDetail> detailList = trade.getPreTradeDetails();
@@ -145,7 +169,10 @@ public class ImportTransformServiceImpl implements ImportTransformService {
 						// 附加属性设置
 						trade.setSourceId(taobaoOrderConfig.getSourceId().longValue());
 						// trade.setCustomerId(taobaoConfig.getCustomerId());
-						trade.setTradeType(taobaoOrderConfig.getTradeType());
+						if(null == trade.getTradeType() || "".equals(trade.getTradeType())) {
+							trade.setTradeType(taobaoOrderConfig.getTradeType());
+						}
+						
 						// trade.setTmsCode(taobaoConfig.getTmsCode());
 						trade.setCrdt(new Date());
 						

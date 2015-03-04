@@ -20,18 +20,27 @@
                       join iagent.usr b on a.crusr = b.usrid
                      where a.orderid = #{orderId}
                     union all
-                    select a.orderid,
-                           a.senddt as begdate,
-                           '您的订单已审核通过  分配 [' || case when a.ordertype = '49' and
-                      left(a.mailid, 1) = 'V' then '圆通快递' when a.ordertype = '49' and isNumber(a.mailid) = 0 then '中通快递' when
-                      left(a.mailid, 1) in ('D', 'E') Then 'EMS' when a.entityid = '102' then '顺丰快递' when a.entityid = '104' then '微特派快递' when
-                      left(a.mailid, 1) = 'B' then '广东邮政YCC' else c.name end || '] 送货' as optdsc, case when a.status = 2 then b.usrid || b.name else '' end as optpsn, a.mailid, c.name as company
-                      from iagent.orderhist a
-                      left join iagent.usr b on a.mdusr = b.usrid
-                      join iagent.company c on a.entityid = c.companyid
-                     where a.orderid = #{orderId}
-                       and a.entityid = c.companyid
-                       and senddt is not null
+                    select min(a.order_id) orderid,
+                        min(a.crdt) begdate,
+                        '您的订单被分配 [' ||
+                        case when min(oh.ordertype)='49' and left(min(a.mail_id),1)='V' then '圆通快递'
+                        when min(oh.ordertype)='49' and isNumber(min(a.mail_id))=0 then '中通快递'
+                        when left(min(a.mail_id),1) in('D','E') Then 'EMS'
+                        when a.entity_id='102' then '顺丰快递'
+                        when a.entity_id='104' then '微特派快递'
+                        when left(min(a.mail_id),1) ='B' then '广东邮政YCC'
+                        else min(c.name) end ||'] 送货' optdsc,
+                        a.crusr||min(u.name) optpsn,
+                        a.mail_id mailid,
+                        case when min(a.account_status_id) = 0 then ''
+                        else min(c.name) end company
+                        from acoapp_oms.shipment_header a
+                        join iagent.orderhist oh on oh.orderid = a.order_id
+                        join iagent.company c on a.entity_id = c.companyid
+                        left join iagent.usr u on u.usrid = a.crusr
+                        where order_id = #{orderId}
+                        and oh.senddt is not null
+                        group by a.crusr,a.entity_id, a.mail_id
                     union all
                     select a.orderid,
                            a.mddt as begdate,

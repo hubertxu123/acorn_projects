@@ -28,45 +28,9 @@ public class InternetCheckServiceImpl implements InternetCheckService {
 	
 	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(InternetCheckServiceImpl.class);
 
-	//private Smooks smooks = null;
-
-/*	public InternetCheckServiceImpl() {
-		try {
-			smooks = new Smooks("smooks/smooksInternet.xml");
-		} catch (Exception ex) {
-			logger.error("smooks init error:", ex);
-		}
-	}*/
-
 	@Autowired
 	private InternetService internetService;
 
-	/**
-	 * smooks转换xml文件到PreTrademap对象中
-	 * 
-	 * @param txml
-	 * @return
-	 */
-	@Deprecated
-	public List<OpsTradeDto> getOrderInfo(String xml) {
-		
-		/*List<OpsTradeDto> preTradeList = null;
-		try {
-			ExecutionContext executionContext = smooks.createExecutionContext();
-			JavaResult result = new JavaResult();
-
-			ByteArrayInputStream baInputStream = new ByteArrayInputStream(xml.getBytes());
-			smooks.filterSource(executionContext, new StreamSource(baInputStream), result);
-
-			preTradeList = (List<OpsTradeDto>) result.getBean("orderlist");
-	            
-		} catch (Exception e) {
-			logger.error("convert xml to POJO error : ", e);
-		}
-		
-		return preTradeList;*/
-		return null;
-	}
 
 	/**
 	 * 转换listmap的值到ListPretare
@@ -100,8 +64,10 @@ public class InternetCheckServiceImpl implements InternetCheckService {
 			pretrade.setReceiverPostCode(dto.getReceiver_post_code() == null ? "" : dto.getReceiver_post_code());
 			pretrade.setInvoiceComment(dto.getInvoiceComment());
 			pretrade.setInvoiceTitle(dto.getInvoiceTitle());
-			pretrade.setTmsCode(dto.getTms_code());
 			pretrade.setShippingFee(null == dto.getPostfee() ? 0 : dto.getPostfee().doubleValue());
+			pretrade.setPaytype("4");
+			pretrade.setSourceId(2L);
+			pretrade.setTmsCode(dto.getTms_code());
 			
 			pretrade.setPayment(Double.parseDouble(dto.getGoodsValue().toEngineeringString()));
 
@@ -164,25 +130,8 @@ public class InternetCheckServiceImpl implements InternetCheckService {
 	 * @return OpsTradeResponseDto
 	 */
 	public OpsTradeResponseDto checkError(List<OpsTradeDto> tradeList) {
-		//List<String> liststr = new LinkedList<String>();
-		
+	
 		OpsTradeResponseDto responseDto = this.validate(tradeList);
-		
-		//List<String> listerror = 
-		
-		/*if (listerror.size() != 0) {
-			StringBuffer response = new StringBuffer();
-			response.append("<?xml version='1.0' encoding='UTF-8'?>");
-			response.append("<ops_trades_response>");
-			response.append("<ops_trade_id>" + listerror.get(1).toString() + "</ops_trade_id>");
-			response.append("<agent_trade_id>mgc</agent_trade_id>");
-			response.append("<result>" + ("013".equals(listerror.get(0)) ? "true" : "false") + "</result>");
-			response.append("<message_code>" + listerror.get(0).toString() + "</message_code>");
-			response.append("<message>" + listerror.get(3).toString() + "</message>");
-			response.append("</ops_trades_response>");
-			liststr.add(0, listerror.get(0).toString());
-			liststr.add(1, response.toString());
-		}*/
 		
 		return responseDto;
 	}
@@ -195,7 +144,7 @@ public class InternetCheckServiceImpl implements InternetCheckService {
 	 */
 	public OpsTradeResponseDto validate(List<OpsTradeDto> tradeList) {
 		OpsTradeResponseDto responseDto = new OpsTradeResponseDto();
-		String opsTradeId = null;
+		String opsTradeId = "";
 		String messageCode = "013";
 		String message = "订单导入成功";
 		
@@ -218,7 +167,8 @@ public class InternetCheckServiceImpl implements InternetCheckService {
 			}
 			
 			//地址长度无效
-			if(preTrade.getReceiver_address() == null || preTrade.getReceiver_address().length() < 5) {
+			if(preTrade.getReceiver_address() == null || "".equals(preTrade.getReceiver_address().trim()) 
+					|| preTrade.getReceiver_address().length() < 5) {
 				messageCode =  "003";
 				message = "地址长度无效(应该大于5，小于128)";
 				break;
@@ -262,12 +212,6 @@ public class InternetCheckServiceImpl implements InternetCheckService {
 				message = "订单付款时间为空";
 				break;
 			}
-			
-			if(null == preTrade.getPostfee() || 0 == preTrade.getPostfee().doubleValue()) {
-				messageCode = "012";
-				message = "无效邮费金额";
-				break;
-			}
 
 			// 订单重复
 			int rowid = internetService.getPreTradeByTradeId(preTrade.getOps_trade_id(), preTrade.getOps_trade_id());
@@ -279,10 +223,14 @@ public class InternetCheckServiceImpl implements InternetCheckService {
 			}
 
 			// 判断指定送货公司是否存在
-			if (!internetService.checkCompanyCode(preTrade.getTms_code())) {
-				messageCode = "114";
-				message = "指定送货公司不存在";
-				break;
+			if(null != preTrade.getTms_code() && !"".equals(preTrade.getTms_code())) {
+				if (!internetService.checkCompanyCode(preTrade.getTms_code())) {
+					messageCode = "114";
+					message = "指定送货公司不存在";
+					break;
+				}
+			} else {
+				preTrade.setTms_code("12345");
 			}
 
 			for (SkuDto sku : preTrade.getSkus()) {
@@ -300,6 +248,7 @@ public class InternetCheckServiceImpl implements InternetCheckService {
 				} catch (Exception e) {
 					messageCode = "005";
 					message = "无效商品单价或数量";
+					logger.error("无效商品单价或数量", e);
 					break;
 				}
 			}

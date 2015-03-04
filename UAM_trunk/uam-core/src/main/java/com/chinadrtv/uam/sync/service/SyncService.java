@@ -18,6 +18,10 @@ public interface SyncService {
      */
     public void syncLdapRoles();
 
-
+    /**
+     * 同步用户及工作组
+     * @param userId  ldap用户Id
+     * @param groupCode  用户目标组
+     */
     public void  syncUser(String userId,String groupCode);
 }

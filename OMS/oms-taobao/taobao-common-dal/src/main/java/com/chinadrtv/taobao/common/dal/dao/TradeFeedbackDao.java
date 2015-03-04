@@ -25,4 +25,12 @@ public interface TradeFeedbackDao extends BaseDao<TradeFeedback> {
 	 * @return List<TradeFeedback>
 	 */
 	List<TradeFeedback> queryChildList(String parentTradeId);
+	
+	/**
+	 * <p></p>
+	 * @param orderType
+	 * @return List<TradeFeedback>
+	 */
+	List<TradeFeedback> queryRawTradeFeedback(String orderType);
+	
 }

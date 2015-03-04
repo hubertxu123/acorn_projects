@@ -33,6 +33,7 @@
         <property name="messageListener">
             <bean class="com.chinadrtv.jingdong.biz.jms.JDOrderImportTopicListener" >
                 <property name="jingdongOrderConfigList" ref="cfgList"/>
+                <property name="fbpList" ref="fbpList"/>
             </bean>
         </property>
     </bean>

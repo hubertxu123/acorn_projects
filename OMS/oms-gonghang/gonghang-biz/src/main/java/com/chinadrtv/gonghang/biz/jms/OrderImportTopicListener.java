@@ -37,21 +37,21 @@ public class OrderImportTopicListener extends JmsListener<Object> {
 		// 如果有在处理，那么直接忽略此消息
 		if (isRun.compareAndSet(false, true)) {
 			try {
-				logger.info("importing start");
+				logger.info("Import start");
 				
 				Date startDate, endDate;
 				endDate = new Date();
-				startDate = getAddDay(endDate, Calendar.DATE, -1);
+				startDate = getAddDay(endDate, Calendar.DATE, -60);
 
 				gonghangOrderService.input(configList, startDate, endDate);
 			} catch (Exception exp) {
-				logger.error("import order error:", exp);
+				logger.error("Import order error:", exp);
 			} finally {
 				isRun.set(false);
-				logger.info("ended import");
+				logger.info("Import finished.");
 			}
 		} else {
-			logger.error("import is running!!!");
+			logger.error("Import is running.");
 		}
 
 	}

@@ -1,16 +1,31 @@
 package com.chinadrtv.service.oms.impl;
 
-import com.chinadrtv.model.oms.PreTrade;
-import com.chinadrtv.model.oms.PreTradeDetail;
-import com.chinadrtv.model.oms.dto.PreTradeDto;
-import com.chinadrtv.model.oms.dto.PreTradeLotDto;
-import com.chinadrtv.service.oms.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.util.*;
+import com.chinadrtv.dal.iagent.dao.PlubasInfoDao;
+import com.chinadrtv.model.oms.PreTrade;
+import com.chinadrtv.model.oms.PreTradeDetail;
+import com.chinadrtv.model.oms.dto.PreTradeDto;
+import com.chinadrtv.model.oms.dto.PreTradeLotDto;
+import com.chinadrtv.service.oms.PreTradeDetailService;
+import com.chinadrtv.service.oms.PreTradeImportService;
+import com.chinadrtv.service.oms.PreTradeLotService;
+import com.chinadrtv.service.oms.PreTradeService;
+import com.chinadrtv.service.oms.PriceReconService;
+import com.chinadrtv.service.oms.PromotionService;
+import com.chinadrtv.service.util.AESEncryptor;
 
 /**
  * Created with (TC).
@@ -34,19 +49,56 @@ public class PreTradeImportServiceImpl implements PreTradeImportService {
     private PreTradeLotService preTradeLotService;
     @Autowired
     private PriceReconService priceReconService;
+    @Autowired
+    private PlubasInfoDao plubasInfoDao;
 
     private static String impStatusRemark = "拆分订单成功";
     private static String sellerMessage_prefix = "子订单 ";
     private static String impStatus_split = "020";
     @Override
     public void importPretrades(PreTradeLotDto preTradeLotDto) {
+    	
         List<String> skus = preTradeService.getInsuranceSkus() ;
         for (Iterator it = preTradeLotDto.getPreTrades().iterator(); it.hasNext(); ) {
             PreTradeDto preTrade = (PreTradeDto) it.next();
+            
+            //Replacing illegal character which contained in receiver address.
+            String receiverAddress = preTrade.getReceiverAddress();
+            receiverAddress = this.eraseIllgealCharacter(receiverAddress);
+            preTrade.setReceiverAddress(receiverAddress);
+            
+            String name = preTrade.getReceiverName();
+            name = this.eraseIllgealCharacter(name);
+            preTrade.setReceiverName(name);
+            
+            String invoiceTitle = preTrade.getInvoiceTitle();
+            invoiceTitle = this.eraseIllgealCharacter(invoiceTitle);
+            preTrade.setInvoiceTitle(invoiceTitle);
+            
+            try {
+				if (null != preTrade.getReceiverMobile() && !"".equals(preTrade.getReceiverMobile().trim())) {
+					String cipherMobile = AESEncryptor.encrypt(preTrade.getReceiverMobile());
+					
+					logger.info("Encrypted preTrade[" + preTrade.getTradeId() + "] mobile No. " + preTrade.getReceiverMobile() + "\t" + cipherMobile);
+					
+					preTrade.setReceiverMobile(cipherMobile);
+				}
+				
+				if(null != preTrade.getReceiverPhone() && !"".equals(preTrade.getReceiverPhone().trim())) {
+					String cipherTelPhone = AESEncryptor.encrypt(preTrade.getReceiverPhone());
+					
+					logger.info("Encrypted preTrade[" + preTrade.getTradeId() + "] Telphone No. " + preTrade.getReceiverPhone() + "\t" + cipherTelPhone);
+					
+					preTrade.setReceiverPhone(cipherTelPhone);
+				}
+			} catch (Exception e) {
+				logger.error("encrypt error", e);
+			}
+            
             preTrade.setCrdt(new Date());
             if ((preTrade.getReceiverMobile() == null || "".equals(preTrade.getReceiverMobile()))
                     && preTrade.getReceiverPhone() != null) {
-                preTrade.setBuyerMessage((preTrade.getBuyerMessage() == null ? "" : preTrade.getBuyerMessage()) + preTrade.getReceiverPhone());
+                preTrade.setBuyerMessage((preTrade.getBuyerMessage() == null ? "" : preTrade.getBuyerMessage())/* + preTrade.getReceiverPhone()*/);
             }
             PreTrade p = preTradeService.findByOpsId(preTrade.getOpsTradeId(), preTrade.getSourceId());
             if (p != null) {
@@ -67,8 +119,6 @@ public class PreTradeImportServiceImpl implements PreTradeImportService {
             /* 订单类型对应默认送货公司 */
             preTradeService.updateTmsCodeAndPayType(preTradeDto);
 
-
-
             //把前3级地址根据映射关系对应到橡果地址
             matchAddress(preTradeDto);
 
@@ -77,8 +127,7 @@ public class PreTradeImportServiceImpl implements PreTradeImportService {
         }
 
         promotionService.promotion(preTradeLotDto.getPreTrades());
-        for(PreTradeDto preTradeDto:preTradeLotDto.getPreTrades())
-        {
+        for(PreTradeDto preTradeDto:preTradeLotDto.getPreTrades()) {
             /* 更新商品名称 */
             preTradeService.updateSkuTitle(preTradeDto,preTradeDto.getPreTradeDetails());
         }
@@ -86,7 +135,25 @@ public class PreTradeImportServiceImpl implements PreTradeImportService {
         preTradeLotService.insert(preTradeLotDto);
     }
 
-    @Override
+    /**
+	 * <p></p>
+	 * @param receiverAddress
+	 * @return
+	 */
+	private String eraseIllgealCharacter(String receiverAddress) {
+		if(null == receiverAddress || "".equals(receiverAddress.trim())) {
+			return "";
+		}
+		String regExp = "[\"`~!@$%^&*\\]\\[\\-_\\\\+=|{}':;',//[//].<>/?~！@￥%……&*——+|{}【】‘；：”“’。，、？]";
+		
+		Pattern pattern = Pattern.compile(regExp);
+		Matcher matcher = pattern.matcher(receiverAddress);
+		receiverAddress = matcher.replaceAll(" ");
+		
+		return receiverAddress;
+	}
+
+	@Override
     public void splitPreTrades(String tradeId) {
 
         PreTrade preTrade = preTradeService.queryPreTradeByTradeId(tradeId);

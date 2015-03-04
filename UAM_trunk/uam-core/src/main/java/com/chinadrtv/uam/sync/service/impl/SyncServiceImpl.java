@@ -115,6 +115,8 @@ public class SyncServiceImpl implements SyncService {
             } else {
                 user = userService.get(User.class, userMapping.getUserId());
                 user.setUpdateDate(new Date());
+                System.out.println("冲突帐号："+userMapping.getSourceId()+"Grp:"+user.getDefGrp()+"NGrp:"+groupInfo.getId());
+
             }
 
             user.setName(agentUser.getDisplayName());

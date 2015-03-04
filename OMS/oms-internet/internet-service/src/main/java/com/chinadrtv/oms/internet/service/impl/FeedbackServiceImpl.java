@@ -55,6 +55,7 @@ public class FeedbackServiceImpl implements FeedbackService {
             }
         }catch (Exception e){
             b = false;
+            logger.error("", e);
         }
         return b;
     }
@@ -85,10 +86,10 @@ public class FeedbackServiceImpl implements FeedbackService {
     	
     	logger.info("post data: " + updateDto);
     	
-    	logger.info("post url: " + url + "/updateLogisitics");
+    	logger.info("post url: " + url + "/orderapi.ashx?action=Ship");
     	
     	try {
-			response = restTemplate.postForEntity(url + "/updateLogisitics", updateDto, OpsTradeResponseDto.class);
+			response = restTemplate.postForEntity(url + "/orderapi.ashx?action=Ship", updateDto, OpsTradeResponseDto.class);
 		} catch (Exception e) {
 			logger.error("post error: ", e);
 		}

@@ -9,4 +9,5 @@ package com.chinadrtv.topicmessage.service;
  */
 public interface DetectSalesMessageService {
     void detectSalesTopicMessage();
+    void delaySalesTasks();
 }

@@ -60,6 +60,9 @@ public class OrderHeaderDto implements Serializable {
 	private BigDecimal orderAmount;
 	private BigDecimal orderCreditAmount;
 	private BigDecimal orderCouponAmount;
+	private BigDecimal orderFreight;
+	private BigDecimal orderOtherDiscount;
+	
 	private String orderChannel;
 	private String discounts;
 	private String discount;
@@ -254,5 +257,16 @@ public class OrderHeaderDto implements Serializable {
 	public void setDiscountAmount(String discountAmount) {
 		this.discountAmount = discountAmount;
 	}
-	
+	public BigDecimal getOrderFreight() {
+		return orderFreight;
+	}
+	public void setOrderFreight(BigDecimal orderFreight) {
+		this.orderFreight = orderFreight;
+	}
+	public BigDecimal getOrderOtherDiscount() {
+		return orderOtherDiscount;
+	}
+	public void setOrderOtherDiscount(BigDecimal orderOtherDiscount) {
+		this.orderOtherDiscount = orderOtherDiscount;
+	}	
 }

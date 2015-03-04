@@ -1,9 +1,9 @@
 package com.chinadrtv.taobao.service;
 
-import com.chinadrtv.taobao.model.TaobaoOrderConfig;
-
 import java.util.Date;
 import java.util.List;
+
+import com.chinadrtv.taobao.model.TaobaoOrderConfig;
 
 /**
  * Created with (TC).
@@ -14,5 +14,6 @@ import java.util.List;
  */
 public interface OrderFetchService {
     Date getServerTime(TaobaoOrderConfig taobaoOrderConfig);
-    List<String> getOrders(TaobaoOrderConfig taobaoOrderConfig,Date startDate, Date endDate);
+    
+    List<String> getOrders(TaobaoOrderConfig taobaoOrderConfig,Date startDate, Date endDate) throws Exception;
 }

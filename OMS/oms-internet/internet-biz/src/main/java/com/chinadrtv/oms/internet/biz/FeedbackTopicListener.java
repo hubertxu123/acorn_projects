@@ -50,24 +50,28 @@ public class FeedbackTopicListener extends JmsListener<Object> {
 			
 			try {
 				List<String> orderTypeList = this.getOrderType(orderType);
-				logger.info("orderTypeList size:" + orderTypeList.size());
+				
 				if (orderTypeList.size() > 0) {
 					tradeFeedbackList = feedbackService.searchOrderByType(orderTypeList);
 				}
-				logger.info("get tradeFeedbackList size:" + tradeFeedbackList.size());
+				
 				// 反馈
 				if (tradeFeedbackList != null && tradeFeedbackList.size() > 0) {
 					for (TradeFeedback tradeFeedback : tradeFeedbackList) {
 						flag = false;
 						errMsg = "";
+						
+						logger.info("ops_trade_id: " + tradeFeedback.getOpsTradeId());
+						
 						try {
-							logger.info("ops_trade_id: " + tradeFeedback.getOpsTradeId());
 							flag = feedbackService.updateTradeStatus(url, tradeFeedback);
 						} catch (Exception exp) {
 							errMsg = exp.getMessage();
 							logger.error("feedback exception: " + exp.getMessage());
 						}
+						
 						logger.info("feedback result:" + flag);
+						
 						// 回写数据库
 						preTrade = new PreTrade();
 						preTrade.setTradeId(tradeFeedback.getOpsTradeId());

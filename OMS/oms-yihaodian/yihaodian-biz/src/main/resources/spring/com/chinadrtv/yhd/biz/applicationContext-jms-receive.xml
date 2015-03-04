@@ -21,14 +21,14 @@
     <bean id="systemConfig" class="com.chinadrtv.common.context.SystemContext">
         <property name="SystemMap">
             <map>
-                <entry key="brokerURL" value="${env_jms_server_url}"/>
+                <entry key="brokerURL" value="${jms_server_url}"/>
             </map>
         </property>
     </bean>
 
     <bean id="jmsQueueReceive" class="com.chinadrtv.runtime.jms.receive.JmsReceiver">
         <property name="connectionFactory" ref="jmsFactoryReceive" />
-        <property name="destinationName" value="${env_yhd_input_destination}" />
+        <property name="destinationName" value="${yhd_input_destination}" />
         <property name="messageListener">
             <bean class="com.chinadrtv.yhd.biz.jms.OrderImportTopicListener" >
                 <property name="yhdOrderConfigList">
@@ -40,7 +40,7 @@
 
     <bean id="jmsQueueReceive2" class="com.chinadrtv.runtime.jms.receive.JmsReceiver">
         <property name="connectionFactory" ref="jmsFactoryReceive" />
-        <property name="destinationName" value="${env_yhd_feedback_destination}" />
+        <property name="destinationName" value="${yhd_feedback_destination}" />
         <property name="messageListener">
             <bean class="com.chinadrtv.yhd.biz.jms.OrderFeedbackTopicListener" >
                 <property name="yhdOrderConfigList">

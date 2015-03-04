@@ -49,7 +49,7 @@ public class MenuGroupTest extends BaseTest {
 	}
 
 	@Test
-	@Rollback(false)
+	//@Rollback(false)
 	public void testMenuGroupMenu() {
 		ResMenu m1 = new ResMenu();
 		m1.setName("新增订单");

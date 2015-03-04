@@ -101,7 +101,7 @@ public class ItemSyncController {
 			
 			rsList.add(ptic);
 			
-			logger.info("loaded raw data: ", ptic);
+			logger.info("loaded raw data: " + ptic);
 		} else {
 			rsList.addAll(pticList);
 		}

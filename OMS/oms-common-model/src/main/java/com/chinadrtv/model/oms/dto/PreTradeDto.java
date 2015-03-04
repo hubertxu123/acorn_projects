@@ -31,6 +31,8 @@ import com.chinadrtv.model.oms.PreTradeDetail;
  * 
  */
 public class PreTradeDto extends PreTrade {
+	
+	private String invoiceType;
 
 	private List<PreTradeDetail> preTradeDetails = new ArrayList<PreTradeDetail>();
 	
@@ -58,4 +60,10 @@ public class PreTradeDto extends PreTrade {
     public void setPreTradeDetails(List<PreTradeDetail> preTradeDetails) {
         this.preTradeDetails = preTradeDetails;
     }
+	public String getInvoiceType() {
+		return invoiceType;
+	}
+	public void setInvoiceType(String invoiceType) {
+		this.invoiceType = invoiceType;
+	}
 }

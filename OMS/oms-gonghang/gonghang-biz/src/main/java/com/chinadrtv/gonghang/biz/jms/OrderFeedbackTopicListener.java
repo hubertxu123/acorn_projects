@@ -38,11 +38,11 @@ public class OrderFeedbackTopicListener extends JmsListener<Object> {
 			try {
 				orderFeedbackService.feedback(configList);
 			} catch (Exception exp) {
-				logger.error("feed back error:", exp);
+				logger.error("Feedback error:", exp);
 				throw new RuntimeException(exp.getMessage());
 			} finally {
 				isRun.set(false);
-				logger.info("end feed back");
+				logger.info("Feedback finished.");
 			}
 
 		}

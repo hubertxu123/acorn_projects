@@ -20,10 +20,12 @@ import org.springframework.web.client.RestTemplate;
 public class DetectSalesMessageServiceImpl implements DetectSalesMessageService {
     private static Logger logger  = LoggerFactory.getLogger(DetectSalesMessageServiceImpl.class);
 
-    @Value("${env_topsale_url}")
+    @Value("${topsale_url}")
     private String topsaleUrl;
-    @Value("${env_syncLeadWithTask_url}")
+    @Value("${syncLeadWithTask_url}")
     private String syncLeadWithTaskUrl;
+    @Value("${delayLeadAndTask_url}")
+    private String delayLeadAndTaskUrl;
 
     @Autowired
     private RestTemplate restTemplate;
@@ -40,5 +42,17 @@ public class DetectSalesMessageServiceImpl implements DetectSalesMessageService 
             logger.error("DetectSalesMessageService Exception:",e);
         }
        logger.info("DetectSalesMessageService end........");
+    }
+
+    @Override
+    public void delaySalesTasks() {
+        logger.info("delay sales task begin....");
+        try{
+            Object delayLeadWithTask  =   restTemplate.getForObject(delayLeadAndTaskUrl,Object.class);
+            logger.info("delay sales task result= "+delayLeadWithTask);
+        }catch (Exception e){
+            logger.error("delay sales task Exception:",e);
+        }
+        logger.info("delay sales task end........");
     }
 }

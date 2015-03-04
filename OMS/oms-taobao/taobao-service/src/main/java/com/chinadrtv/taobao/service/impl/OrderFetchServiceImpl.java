@@ -1,5 +1,25 @@
 package com.chinadrtv.taobao.service.impl;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import net.sf.json.JSONObject;
+
+import org.apache.commons.lang.time.DateUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
+
 import com.chinadrtv.taobao.common.util.BASE64;
 import com.chinadrtv.taobao.model.TaobaoOrderConfig;
 import com.chinadrtv.taobao.model.TradeModel;
@@ -7,28 +27,8 @@ import com.chinadrtv.taobao.service.OrderFetchService;
 import com.taobao.api.ApiException;
 import com.taobao.api.DefaultTaobaoClient;
 import com.taobao.api.TaobaoClient;
-import com.taobao.api.domain.Trade;
 import com.taobao.api.request.TimeGetRequest;
-import com.taobao.api.request.TradeFullinfoGetRequest;
-import com.taobao.api.request.TradesSoldIncrementGetRequest;
 import com.taobao.api.response.TimeGetResponse;
-import com.taobao.api.response.TradeFullinfoGetResponse;
-import com.taobao.api.response.TradesSoldIncrementGetResponse;
-import net.sf.json.JSONObject;
-import org.apache.commons.lang.time.DateUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 /**
  * Created with (TC).
@@ -41,11 +41,11 @@ import java.util.List;
 public class OrderFetchServiceImpl implements OrderFetchService {
     private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(OrderImportServiceImpl.class);
 
-    private String format;
+    /*private String format;
     private int connectTimeout;
     private int readTimeout;
     private long pageSize;
-    private int adjustAmount;
+    private int adjustAmount;*/
     private String orderStatus;
     @Autowired
     private RestTemplate restTemplate;
@@ -55,11 +55,11 @@ public class OrderFetchServiceImpl implements OrderFetchService {
 
     public OrderFetchServiceImpl()
     {
-        this.format = com.taobao.api.Constants.FORMAT_XML;
+        /*this.format = com.taobao.api.Constants.FORMAT_XML;
         this.connectTimeout = 1000 * 30;
         this.readTimeout = 1000 * 30;
         this.pageSize = 50L;
-        this.adjustAmount = 300;
+        this.adjustAmount = 300;*/
         orderStatus="WAIT_SELLER_SEND_GOODS"; //WAIT_SELLER_SEND_GOODS
     }
 
@@ -83,7 +83,7 @@ public class OrderFetchServiceImpl implements OrderFetchService {
         return time;
     }
 
-    public List<String> getOrders(TaobaoOrderConfig taobaoOrderConfig,Date startDate, Date endDate)
+    public List<String> getOrders(TaobaoOrderConfig taobaoOrderConfig,Date startDate, Date endDate) throws Exception
     {
         List<DateSection> dateSectionList=this.splitDateByDay(startDate,endDate);
         if(dateSectionList!=null&&dateSectionList.size()>0)
@@ -147,7 +147,7 @@ public class OrderFetchServiceImpl implements OrderFetchService {
         return dateSectionList;
     }
 
-    private List<String> getTradeList(TaobaoOrderConfig taobaoOrderConfig, Date startModified, Date endModified, String status){
+    private List<String> getTradeList(TaobaoOrderConfig taobaoOrderConfig, Date startModified, Date endModified, String status) throws Exception{
         TradeModel tradeModel = new TradeModel();
         tradeModel.setTaobaoOrderConfig(taobaoOrderConfig);
 
@@ -160,7 +160,22 @@ public class OrderFetchServiceImpl implements OrderFetchService {
         HttpEntity request = getHttpEntity(tradeModel);
         logger.info("获取交易明细","getTradeList : "+simpleDateFormat.format(new Date()));
 
-        List<String> trades = restTemplate.postForObject(cloudUrl+"/getTradeList", request, List.class);
+        List<String> trades = null;
+        
+        ResponseEntity<List> response = null;
+        
+        try {
+			response = restTemplate.postForEntity(cloudUrl+"/getTradeList", request, List.class, request);
+		} catch (RestClientException e) {
+			logger.error("post error", e);
+		}
+        
+        if(null ==response || response.getStatusCode().value() != 200) {
+    		throw new Exception("post url error");
+    	}
+        
+        trades = response.getBody();
+        //List<String> trades = restTemplate.postForObject(cloudUrl+"/getTradeList", request, List.class);
 
         if(trades!=null){
             logger.info("获取交易明细数量","明细数量: "+trades.size());
@@ -187,7 +202,9 @@ public class OrderFetchServiceImpl implements OrderFetchService {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType( MediaType.APPLICATION_JSON );
         String JSONInput = JSONObject.fromObject(obj).toString();
-
+        
+        logger.info(JSONInput);
+        
         return new HttpEntity( JSONInput, headers );
     }
 

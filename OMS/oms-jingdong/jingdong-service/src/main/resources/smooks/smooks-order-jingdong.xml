@@ -26,6 +26,7 @@
             <json_1:key from="order_end_time">order_end_time</json_1:key>
         </json_1:keyMap>
     </json_1:reader>
+    
     <jb:bean beanId="orderlist" class="java.util.ArrayList" createOnElement="/json/order_get_response/order/orderInfo">
         <jb:wiring beanIdRef="preTradeDto"/>
     </jb:bean>
@@ -64,6 +65,46 @@
         <jb:value data="/json/order_get_response/order/orderInfo/item_info_list/element/outer_sku_id" property="outSkuId"/>
         <jb:value data="/json/order_get_response/order/orderInfo/item_info_list/element/sku_name" property="skuName"/>
         <!--<jb:wiring beanIdRef="preTradeDto" property="preTradeDto"/>-->
+    </jb:bean>
+    
+    
+    <jb:bean beanId="fbpOrderlist" class="java.util.ArrayList" createOnElement="/json/order_fbp_get_response/order/orderInfo">
+        <jb:wiring beanIdRef="fbpPreTradeDto"/>
+    </jb:bean>
+    <jb:bean beanId="fbpPreTradeDto" class="com.chinadrtv.model.oms.dto.PreTradeDto" createOnElement="/json/order_fbp_get_response/order/orderInfo">
+        <jb:value data="/json/order_fbp_get_response/order/orderInfo/order_id" property="tradeId"/>
+        <jb:value data="/json/order_fbp_get_response/order/orderInfo/order_id" property="opsTradeId"/>
+        <jb:value data="/json/order_fbp_get_response/order/orderInfo/order_seller_price" decoder="Double" property="payment"/>
+        <jb:value data="/json/order_fbp_get_response/order/orderInfo/seller_discount" decoder="Double" property="discountFee"/>
+        <jb:value data="/json/order_fbp_get_response/order/orderInfo/invoice_info" property="invoiceTitle"/>
+        <jb:value data="/json/order_fbp_get_response/order/orderInfo/freight_price" decoder="Double" property="shippingFee"/>
+        <jb:value data="/json/order_fbp_get_response/order/orderInfo/order_remark" property="buyerMessage"/>
+        <jb:value data="/json/order_fbp_get_response/order/orderInfo/order_start_time" decoder="Date" property="crdt">
+            <jb:decodeParam name="format">yyyy-MM-dd HH:mm:ss</jb:decodeParam>
+            <jb:decodeParam name="locale">sv_SE</jb:decodeParam>
+        </jb:value> <jb:value data="/json/order_fbp_get_response/order/orderInfo/order_start_time" decoder="Date" property="outCrdt">
+        <jb:decodeParam name="format">yyyy-MM-dd HH:mm:ss</jb:decodeParam>
+        <jb:decodeParam name="locale">sv_SE</jb:decodeParam>
+        </jb:value>
+        <jb:value data="/json/order_fbp_get_response/order/orderInfo/consignee_info/fullname" property="receiverName"/>
+        <jb:value data="/json/order_fbp_get_response/order/orderInfo/consignee_info/full_address" property="receiverAddress"/>
+        <jb:value data="/json/order_fbp_get_response/order/orderInfo/consignee_info/telephone"  property="receiverPhone"/>
+        <jb:value data="/json/order_fbp_get_response/order/orderInfo/consignee_info/mobile"  property="receiverMobile"/>
+        <jb:value data="/json/order_fbp_get_response/order/orderInfo/consignee_info/province"  property="receiverProvince"/>
+        <jb:value data="/json/order_fbp_get_response/order/orderInfo/consignee_info/city" property="receiverCity"/>
+        <jb:value data="/json/order_fbp_get_response/order/orderInfo/consignee_info/county" property="receiverCounty"/>
+        <jb:wiring beanIdRef="fbpPreTradeDetails" property="preTradeDetails"/>
+    </jb:bean>
+    <jb:bean beanId="fbpPreTradeDetails" class="java.util.ArrayList" createOnElement="/json/order_fbp_get_response/order/orderInfo/item_info_list">
+        <jb:wiring beanIdRef="fbpPreTradeDetail"/>
+    </jb:bean>
+    <jb:bean beanId="fbpPreTradeDetail" class="com.chinadrtv.model.oms.PreTradeDetail" createOnElement="/json/order_fbp_get_response/order/orderInfo/item_info_list/element">
+        <jb:value data="/json/order_fbp_get_response/order/orderInfo/item_info_list/element/item_total" decoder="Integer" property="qty"/>
+        <jb:value data="/json/order_fbp_get_response/order/orderInfo/item_info_list/element/jd_price" decoder="Double" property="price"/>
+        <jb:value data="/json/order_fbp_get_response/order/orderInfo/item_info_list/element/jd_price" decoder="Double" property="upPrice"/>
+        <jb:value data="/json/order_fbp_get_response/order/orderInfo/item_info_list/element/sku_id" property="skuId"/>
+        <jb:value data="/json/order_fbp_get_response/order/orderInfo/item_info_list/element/outer_sku_id" property="outSkuId"/>
+        <jb:value data="/json/order_fbp_get_response/order/orderInfo/item_info_list/element/sku_name" property="skuName"/>
     </jb:bean>
 
 </smooks-resource-list>

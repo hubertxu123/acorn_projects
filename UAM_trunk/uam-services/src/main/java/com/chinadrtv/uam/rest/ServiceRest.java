@@ -2,6 +2,8 @@ package com.chinadrtv.uam.rest;
 
 import java.util.*;
 
+import com.chinadrtv.uam.dto.ResMenuTreeDto;
+import com.chinadrtv.uam.service.ResMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,6 +39,9 @@ public class ServiceRest {
 
 	@Autowired
 	private SiteService siteService;
+
+    @Autowired
+    private ResMenuService resMenuService;
 
 	/**
 	 * 得到用户
@@ -341,5 +346,20 @@ public class ServiceRest {
         List<String> userIdList =userService.getUserListByDepartment(source.getValue(),departmentNum);
 
         return userIdList;
+    }
+
+    /**
+     * 得到菜单列表
+     *
+     * @param siteName
+     * @param userId
+     * @return
+     */
+    @RequestMapping(value = "/menus/list/{siteName}/{userId}")
+    @ResponseBody
+    public List<ResMenuTreeDto> getMenuTreeByUid(
+                                       @PathVariable("siteName") String siteName,
+                                       @PathVariable("userId") String userId) {
+        return resMenuService.getMenuTreeListByUserId(Long.valueOf(userId), siteName);
     }
 }

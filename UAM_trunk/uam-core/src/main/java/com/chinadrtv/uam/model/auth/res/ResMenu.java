@@ -22,11 +22,16 @@ public class ResMenu extends Resource {
 	 */
 	private static final long serialVersionUID = -4771307639651256414L;
 
-	@Column(name = "menu_url", length = 255, nullable = false)
+	@Column(name = "menu_url", length = 255)
 	private String menuUrl;
-	
-	@OneToMany(mappedBy = "menu")
-	private Set<MenuGroupMenu> menuGroupMenus = new LinkedHashSet<MenuGroupMenu>();
+    @Column(name = "parent_Id", length = 19)
+	private Long parentId;
+    @Column(name = "sort",length = 2)
+    private int sort;
+    @Column(name = "description", length = 255)
+    private String description;
+    @Column(name = "alias", length = 30)
+    private String alias;
 
     public String getMenuUrl() {
         return menuUrl;
@@ -36,11 +41,35 @@ public class ResMenu extends Resource {
         this.menuUrl = menuUrl;
     }
 
-    public Set<MenuGroupMenu> getMenuGroupMenus() {
-        return menuGroupMenus;
+    public Long getParentId() {
+        return parentId;
     }
 
-    public void setMenuGroupMenus(Set<MenuGroupMenu> menuGroupMenus) {
-        this.menuGroupMenus = menuGroupMenus;
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
+    }
+
+    public int getSort() {
+        return sort;
+    }
+
+    public void setSort(int sort) {
+        this.sort = sort;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
     }
 }

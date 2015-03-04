@@ -95,7 +95,13 @@ public class StockSyncServiceImpl implements StockSyncService {
 			
 			if(null != response && response.getStatusCode().value() == 200) {
 				PreTradeInventory[] ptis = response.getBody();
-				this.persist(ptis);
+				
+				try {
+					this.persist(ptis);
+				} catch (Exception e) {
+					//FIXME mail notification
+					logger.error("invalid outerId", e);
+				}
 			}
 		}
 	}
@@ -106,6 +112,9 @@ public class StockSyncServiceImpl implements StockSyncService {
 	 */
 	private void persist(PreTradeInventory[] ptis) {
 		for(PreTradeInventory pti : ptis) {
+			
+			logger.info(pti.toString());
+			
 			Boolean exist = preTradeInventoryDao.exist(pti);
 			
 			if (null == pti.getOuterId() || "".equals(pti.getOuterId().trim())) {

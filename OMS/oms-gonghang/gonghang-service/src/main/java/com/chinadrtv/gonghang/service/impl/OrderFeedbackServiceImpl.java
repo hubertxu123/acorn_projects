@@ -81,7 +81,7 @@ public class OrderFeedbackServiceImpl implements OrderFeedbackService {
 			}
 
 			preTrade.setFeedbackStatusRemark(errMsg);
-			preTrade.setFeedbackUser("order-feedback-icbc");
+			preTrade.setFeedbackUser("order-feedback-gonghang");
 			preTrade.setFeedbackDate(new Date());
 
 			tradeFeedbackDao.updateOrderFeedbackStatus(preTrade);
@@ -99,15 +99,11 @@ public class OrderFeedbackServiceImpl implements OrderFeedbackService {
 		String method = "icbcb2c.order.sendmess";
 		String reqData = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
 						 "<body>" +
-						 "<order_id>" + tradeFeedback.getOrderId() + "</order_id>" +
+						 "<order_id>" + tradeFeedback.getTradeId() + "</order_id>" +
 						 "<logistics_company>" + tradeFeedback.getCompanyCode() + "</logistics_company>" +
 						 "<shipping_code>" + tradeFeedback.getMailId() + "</shipping_code>" +
 						 "<shipping_time>" + sdfTimestamp.format(new Date()) + "</shipping_time>" +
 						 "<shipping_user>ACORN</shipping_user>" +
-						 "<notes>01</notes>" +
-						 //"<products>01</products>" +
-						 //"<shipping_user>01</shipping_user>" +
-						 //"<product_id>01</product_id>" +
 						 "</body>";
 		
 		String requestUrl = EncryptUtil.generateRequestUrl(config, method, reqData);
@@ -122,7 +118,7 @@ public class OrderFeedbackServiceImpl implements OrderFeedbackService {
 		}
 		
 		if(null ==response || response.getStatusCode().value() != 200) {
-    		throw new Exception("request ICBC web service error!");
+    		throw new Exception("post ICBC web service error!");
     	}
 		
 		String content = new String(response.getBody().getBytes("ISO-8859-1"), "UTF-8");
@@ -136,7 +132,7 @@ public class OrderFeedbackServiceImpl implements OrderFeedbackService {
 		smooks.filterSource(executionContext, new StreamSource(baInputStream), result);
 
 		ResponseHeaderDto responseHeader = (ResponseHeaderDto) result.getBean("responseHeader");
-		if(null == responseHeader || !"OK".equalsIgnoreCase(responseHeader.getRetMsg())) {
+		if(null == responseHeader || null == responseHeader.getRetMsg() || !"OK".equalsIgnoreCase(responseHeader.getRetMsg())) {
 			throw new Exception("更新失败");
 		}
 		

@@ -95,6 +95,8 @@
 				<entry key="1032" value="36FxTAdzTQ"/>
 				<!-- yuan tong -->
 				<entry key="1040" value="XTqWZ58Q0c"/>
+				<!-- 北京宅急送 -->
+				<entry key="125" value="AdqWZ14Q02"/>
             </map>
         </property>
     </bean>

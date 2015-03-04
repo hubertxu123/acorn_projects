@@ -90,6 +90,7 @@ public class OrderImportServiceImpl implements OrderImportService {
 	private List<PreTradeDto> fetchOrders(TaobaoOrderConfig taobaoOrderConfig, Date startDate, Date endDate) {
 		try {
 			List<String> list = orderFetchService.getOrders(taobaoOrderConfig, startDate, endDate);
+			
 			if (list != null && list.size() > 0) {
 				return importTransformService.transform(taobaoOrderConfig, list);
 			}

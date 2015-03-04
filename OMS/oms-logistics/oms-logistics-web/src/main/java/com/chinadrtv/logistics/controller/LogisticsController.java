@@ -48,6 +48,7 @@ public class LogisticsController
     }
 
     @ExceptionHandler
+    @ResponseBody
     public String handleException(Exception ex, HttpServletRequest request)
     {
         logger.error("system error:", ex);

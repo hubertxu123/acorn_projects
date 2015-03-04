@@ -33,5 +33,8 @@ public interface TradeSourceConstants {
     
     //官网订单
     public final static long WEBSITE_SOURCE_ID = 24;
+    
+    //分销统计订单
+    public final static long RETAIL_STATISTICS_SOURCE_ID = 25;
 
 }

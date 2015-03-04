@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<!-- Application context definition. -->
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
@@ -19,12 +17,12 @@
 	default-autowire="byName">
 
 	<context:annotation-config />
+	
+	<mvc:resources mapping="/static/**" location="/static/"/>
 
     <context:component-scan base-package="com.chinadrtv.taobao.controller" />
 
-    <bean
-            class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
-    </bean>
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>
 
     <bean id="mappingJacksonHttpMessageConverter"
           class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
@@ -34,21 +32,13 @@
           class="org.springframework.http.converter.ByteArrayHttpMessageConverter">
     </bean>
 
-    <!--<bean id="xmlMessageConverter" class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter"/>
--->
-    <!-- <bean id="bufferedImageHttpMessageConverter" class="org.springframework.http.converter.BufferedImageHttpMessageConverter"/> -->
-    <!-- 启动Spring MVC的注解功能，完成请求和注解POJO的映射 -->
-    <!-- <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"> -->
-    <bean
-            class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
         <property name="messageConverters">
             <list>
                 <ref bean="mappingJacksonHttpMessageConverter" />
                 <ref bean="byteArrayHttpMessageConverter" />
-                <!-- <ref bean="xmlMessageConverter" />-->
             </list>
         </property>
-        <!-- 日期格式转换 -->
         <property name="webBindingInitializer">
             <bean class="com.chinadrtv.web.converter.DateConverter" />
         </property>

@@ -24,10 +24,11 @@
                     <property name="appKey" value="ZeQFkiJI"/>
                     <property name="appSecret" value="APPSOIUxQg4byGKmArvrXt1JJBa7SW86"/>
                     <property name="accessToken" value="6TooHpr5SaH9uikMbPcIpfrcIq78LKwBfmqaE38PpTUcNrHT0VMRBaxEnerCRt3n"/>
-                    <property name="customerId" value=""/>
-                    <property name="tradeType" value="98"/>
-                    <property name="tmsCode" value="107"/>
-                    <property name="sourceId" value="24"/>
+                    <property name="customerId" value="工商银行融E购"/>
+                    <property name="tradeType" value="249"/>
+                    <property name="tmsCode" value="12345"/>
+                    <property name="sourceId" value="12"/>
+                    <property name="tradeFrom" value="GONGHANG"/>
                 </bean>
             </list>
         </constructor-arg>

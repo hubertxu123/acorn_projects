@@ -12,7 +12,7 @@
 
 	<context:component-scan base-package="com.chinadrtv.uam" />
 
-<!--    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"
+   <!-- <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"
           p:driverClassName="oracle.jdbc.driver.OracleDriver"
           p:url="jdbc:oracle:thin:@192.168.4.10:1521:testdb"
           p:username="acoapp_uam"
@@ -44,7 +44,7 @@
 		p:timeBetweenEvictionRunsMillis="300000" 
 		/>
 
-   <!-- <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"
+    <!--<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"
 		p:driverClassName="oracle.jdbc.driver.OracleDriver"
 		p:url="jdbc:oracle:thin:@//192.168.1.8:1521/iagent.acorn"
 		p:username="acoapp_uam"

@@ -31,7 +31,7 @@ public class OrderDetailDto implements Serializable {
 	private static final long serialVersionUID = -2889542292030925305L;
 	
 	private Long productId;
-	private Long productSkuId;
+	private String productSkuId;
 	private String productCode;
 	private String productName;
 	private Integer productNumber;
@@ -44,10 +44,10 @@ public class OrderDetailDto implements Serializable {
 	public void setProductId(Long productId) {
 		this.productId = productId;
 	}
-	public Long getProductSkuId() {
+	public String getProductSkuId() {
 		return productSkuId;
 	}
-	public void setProductSkuId(Long productSkuId) {
+	public void setProductSkuId(String productSkuId) {
 		this.productSkuId = productSkuId;
 	}
 	public String getProductCode() {

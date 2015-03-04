@@ -66,7 +66,7 @@
         <mapper resource="com/chinadrtv/sqlmapper/oms/ShipmentHeaderMapper.xml"/>
         <mapper resource="com/chinadrtv/sqlmapper/oms/PromotionMapper.xml"/>
 
-        <mapper resource="sqlmapper/TraddFeedbackMapper.xml"/>
+        <mapper resource="sqlmapper/TradeFeedbackMapper.xml"/>
         <mapper resource="com/chinadrtv/sqlmapper/oms/PreTradeItemMapper.xml"/>
         <mapper resource="sqlmapper/PreTradeInventoryMapper.xml"/>
         <mapper resource="sqlmapper/StockSyncMapper.xml"/>

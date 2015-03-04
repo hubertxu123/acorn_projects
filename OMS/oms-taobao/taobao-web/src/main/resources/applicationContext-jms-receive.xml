@@ -87,7 +87,7 @@
                     <property name="url" value="http://gw.api.taobao.com/router/rest"/>
                     <property name="appkey" value="21006959"/>
                     <property name="appSecret" value="154d63659bfc5c48aaea9a8f1c945a43"/>
-                    <property name="sessionKey" value="61026270b997779d4f00a0e1c855ec646f41f44f477fa99829074669"/>
+                    <property name="sessionKey" value="6102827fde9c7e6c7394c626ca2bb6dd1461c9528380d6c829074669"/>
                     <property name="customerId" value=""/>
                     <property name="tradeType" value="98"/>
                     <property name="tmsCode" value="107"/>
@@ -98,7 +98,7 @@
                     <property name="url" value="http://gw.api.taobao.com/router/rest"/>
                     <property name="appkey" value="21006959"/>
                     <property name="appSecret" value="154d63659bfc5c48aaea9a8f1c945a43"/>
-                    <property name="sessionKey" value="610010011becfd655371173a9edfbe1e63a24f605ecb23f44265752"/>
+                    <property name="sessionKey" value="6100428deeb79e27520cb73ac2c1a789991614a4778151444265752"/>
                     <property name="customerId" value=""/>
                     <property name="tradeType" value="208"/>
                     <property name="tmsCode" value="107"/>
@@ -108,35 +108,36 @@
                     <property name="url" value="http://gw.api.taobao.com/router/rest"/>
                     <property name="appkey" value="21006959"/>
                     <property name="appSecret" value="154d63659bfc5c48aaea9a8f1c945a43"/>
-                    <property name="sessionKey" value="6100b064aca8e11cbac2cb07b39074af03c5d731fcdcd761829120473"/>
+                    <property name="sessionKey" value="6101e131c66509e9b1e291b690c4fa2d3417fe1045e0cfd1829120473"/>
                     <property name="customerId" value=""/>
                     <property name="tradeType" value="221"/>
                     <property name="tmsCode" value="107"/>
                     <property name="sourceId" value="2"/>
                 </bean>
-
-                <bean class="com.chinadrtv.taobao.model.TaobaoOrderConfig">
+				
+				<!-- 天猫maggieq旗舰店 -->
+                <!-- <bean class="com.chinadrtv.taobao.model.TaobaoOrderConfig">
                     <property name="url" value="http://gw.api.taobao.com/router/rest"/>
                     <property name="appkey" value="21006959"/>
                     <property name="appSecret" value="154d63659bfc5c48aaea9a8f1c945a43"/>
-                    <property name="sessionKey" value="61001120d720b432208819fbe674a9087969512995e1f721745952451"/>
+                    <property name="sessionKey" value="6101a27ed482212fdc296668e4887e49aaf117a73e5038a1745952451"/>
                     <property name="customerId" value=""/>
                     <property name="tradeType" value="239"/>
                     <property name="tmsCode" value="107"/>
                     <property name="sourceId" value="2"/>
                     <property name="syncStock" value="true"/>
-                </bean>
+                </bean> -->
 
-                <bean class="com.chinadrtv.taobao.model.TaobaoOrderConfig">
+                <!-- <bean class="com.chinadrtv.taobao.model.TaobaoOrderConfig">
                     <property name="url" value="http://gw.api.taobao.com/router/rest"/>
                     <property name="appkey" value="21006959"/>
                     <property name="appSecret" value="154d63659bfc5c48aaea9a8f1c945a43"/>
-                    <property name="sessionKey" value="6101014422120abaceff0e113e411669e3c6b970e46f9671738059546"/>
+                    <property name="sessionKey" value="61016115076c1977add168c7e4020de0e30e4291bf692d51738059546"/>
                     <property name="customerId" value=""/>
                     <property name="tradeType" value="206"/>
                     <property name="tmsCode" value="107"/>
                     <property name="sourceId" value="10"/>
-                </bean>
+                </bean> -->
 
                <!-- <bean class="com.chinadrtv.taobao.model.TaobaoOrderConfig">
                     <property name="url" value="http://gw.api.taobao.com/router/rest"/>
@@ -153,7 +154,7 @@
                     <property name="url" value="http://gw.api.taobao.com/router/rest"/>
                     <property name="appkey" value="21006959"/>
                     <property name="appSecret" value="154d63659bfc5c48aaea9a8f1c945a43"/>
-                    <property name="sessionKey" value="6101404e93271444396ef0d1ceb6aecbb996c38dd90260f1829524257"/>
+                    <property name="sessionKey" value="6101608ba631e292117b1b4cfaac8b7f28bbc884a836f411829524257"/>
                     <property name="customerId" value=""/>
                     <property name="tradeType" value="228"/>
                     <property name="tmsCode" value="107"/>
@@ -164,7 +165,7 @@
                     <property name="url" value="http://gw.api.taobao.com/router/rest"/>
                     <property name="appkey" value="21006959"/>
                     <property name="appSecret" value="154d63659bfc5c48aaea9a8f1c945a43"/>
-                    <property name="sessionKey" value="61004098ae83e09a6193296a97c4b0bd142a588fb33d09a853641722"/>
+                    <property name="sessionKey" value="6101000c12d3497e3fa2dabbadc452e606e6be62fa4d2ab853641722"/>
                     <property name="customerId" value=""/>
                     <property name="tradeType" value="237"/>
                     <property name="tmsCode" value="107"/>
@@ -175,7 +176,7 @@
                     <property name="url" value="http://gw.api.taobao.com/router/rest"/>
                     <property name="appkey" value="21006959"/>
                     <property name="appSecret" value="154d63659bfc5c48aaea9a8f1c945a43"/>
-                    <property name="sessionKey" value="610141891037bf83015565c9e010d736072e1540e5a27ae912054893"/>
+                    <property name="sessionKey" value="6101d177d4a77320243ea87f51d361206f112c9496d495d912054893"/>
                     <property name="customerId" value=""/>
                     <property name="tradeType" value="127"/>
                     <property name="tmsCode" value="107"/>
@@ -194,23 +195,23 @@
                     <property name="sourceId" value="10"/>
                 </bean>
 
-                <bean class="com.chinadrtv.taobao.model.TaobaoOrderConfig">
+                <!-- <bean class="com.chinadrtv.taobao.model.TaobaoOrderConfig">
                     <property name="url" value="http://gw.api.taobao.com/router/rest"/>
                     <property name="appkey" value="21006959"/>
                     <property name="appSecret" value="154d63659bfc5c48aaea9a8f1c945a43"/>
-                    <property name="sessionKey" value="6102905ed309214cf0fhe4da3493585e15238f63c4361a32001459576"/>
+                    <property name="sessionKey" value="6101000811baf59bdc57320833426446d664dd95c92d3592001459576"/>
                     <property name="customerId" value=""/>
                     <property name="tradeType" value="245"/>
                     <property name="tmsCode" value="107"/>
                     <property name="sourceId" value="2"/>
                     <property name="syncStock" value="true"/>
-                </bean>
+                </bean> -->
 
                 <bean class="com.chinadrtv.taobao.model.TaobaoOrderConfig">
                     <property name="url" value="http://gw.api.taobao.com/router/rest"/>
                     <property name="appkey" value="21006959"/>
                     <property name="appSecret" value="154d63659bfc5c48aaea9a8f1c945a43"/>
-                    <property name="sessionKey" value="6102501b4132fcZZec653674470bb3323e6448194052aa22023158850"/>
+                    <property name="sessionKey" value="6102b054de72e140307d661db5eaa9030885d79d308a1ec2023158850"/>
                     <property name="customerId" value=""/>
                     <property name="tradeType" value="244"/>
                     <property name="tmsCode" value="107"/>
@@ -232,7 +233,7 @@
                     <property name="url" value="http://gw.api.taobao.com/router/rest"/>
                     <property name="appkey" value="21006959"/>
                     <property name="appSecret" value="154d63659bfc5c48aaea9a8f1c945a43"/>
-                    <property name="sessionKey" value="61001194f7ec55a8f874008245914940650f9352ef059cc2038122309"/>
+                    <property name="sessionKey" value="61016255f89bd573d184aa5e96b2ea7f31f7b5fd9c6a7202038122309"/>
                     <property name="customerId" value=""/>
                     <property name="tradeType" value="248"/>
                     <property name="tmsCode" value="107"/>
@@ -243,49 +244,52 @@
                     <property name="url" value="http://gw.api.taobao.com/router/rest"/>
                     <property name="appkey" value="21006959"/>
                     <property name="appSecret" value="154d63659bfc5c48aaea9a8f1c945a43"/>
-                    <property name="sessionKey" value="6100e0741b02284154e02e78bef65c97434d2a580d34f6d2097999908"/>
+                    <property name="sessionKey" value="610142800ce772577bd53f96ca4d62e12e0f1d97f3fef062097999908"/>
                     <property name="customerId" value=""/>
                     <property name="tradeType" value="251"/>
                     <property name="tmsCode" value="107"/>
                     <property name="sourceId" value="2"/>
                 </bean>
                 <!-- 互联网淘宝天天养生 -->
-                <bean class="com.chinadrtv.taobao.model.TaobaoOrderConfig">
+                <!-- <bean class="com.chinadrtv.taobao.model.TaobaoOrderConfig">
                     <property name="url" value="http://gw.api.taobao.com/router/rest"/>
                     <property name="appkey" value="21006959"/>
                     <property name="appSecret" value="154d63659bfc5c48aaea9a8f1c945a43"/>
-                    <property name="sessionKey" value="61008277c4c7b6bcc9683ef800aef89286d1d6bb83565b22091000130"/>
+                    <property name="sessionKey" value="61008147c4c7b6bcc9683e17d7d9daf800aef89286d65b22091000130"/>
                     <property name="customerId" value=""/>
                     <property name="tradeType" value="252"/>
                     <property name="tmsCode" value="107"/>
                     <property name="sourceId" value="2"/>
-                </bean>
+                </bean> -->
                 <!-- 互联网淘宝吃东吃西 -->
-                <bean class="com.chinadrtv.taobao.model.TaobaoOrderConfig">
+                <!-- <bean class="com.chinadrtv.taobao.model.TaobaoOrderConfig">
                     <property name="url" value="http://gw.api.taobao.com/router/rest"/>
                     <property name="appkey" value="21006959"/>
                     <property name="appSecret" value="154d63659bfc5c48aaea9a8f1c945a43"/>
-                    <property name="sessionKey" value="6101511f150453c3cc31460eac13932ced916bca427a7392089087941"/>
+                    <property name="sessionKey" value="6101e07b5c009d91c0c5b3f5fac7ce83dcc2d005559c22d2089087941"/>
                     <property name="customerId" value=""/>
                     <property name="tradeType" value="253"/>
                     <property name="tmsCode" value="107"/>
                     <property name="sourceId" value="2"/>
                     <property name="syncStock" value="false"/>
-                </bean>
+                </bean> -->
+                
                 <!-- 乐纷纷 -->
                 <bean class="com.chinadrtv.taobao.model.TaobaoOrderConfig">
                     <property name="url" value="http://gw.api.taobao.com/router/rest"/>
                     <property name="appkey" value="21006959"/>
                     <property name="appSecret" value="154d63659bfc5c48aaea9a8f1c945a43"/>
-                    <property name="sessionKey" value="6102715a1cc210be5459ccf1f2ca36bd99a5a145505c66f2097490216"/>
+                    <property name="sessionKey" value="61020283296c1ebe86477f1b9b1ed31597171009ac35e812097490216"/>
                     <property name="customerId" value=""/>
                     <property name="tradeType" value="259"/>
                     <property name="tmsCode" value="107"/>
                     <property name="sourceId" value="2"/>
                     <property name="syncStock" value="true"/>
+                    <property name="splitOrder" value="true"/>
                 </bean>
+                
                 <!-- 心享旗舰店 (生鲜店铺) -->
-                <bean class="com.chinadrtv.taobao.model.TaobaoOrderConfig">
+                <!-- <bean class="com.chinadrtv.taobao.model.TaobaoOrderConfig">
                     <property name="url" value="http://gw.api.taobao.com/router/rest"/>
                     <property name="appkey" value="21006959"/>
                     <property name="appSecret" value="154d63659bfc5c48aaea9a8f1c945a43"/>
@@ -294,7 +298,19 @@
                     <property name="tradeType" value="261"/>
                     <property name="tmsCode" value="107"/>
                     <property name="sourceId" value="2"/>
-                </bean>
+                </bean> -->
+                
+                <!-- 百变女主角栏目组 -->
+                <!-- <bean class="com.chinadrtv.taobao.model.TaobaoOrderConfig">
+                    <property name="url" value="http://gw.api.taobao.com/router/rest"/>
+                    <property name="appkey" value="21006959"/>
+                    <property name="appSecret" value="154d63659bfc5c48aaea9a8f1c945a43"/>
+                    <property name="sessionKey" value="6100e29857ce1271b256b8b4033a30e944d0d1d042293c72138161186"/>
+                    <property name="customerId" value=""/>
+                    <property name="tradeType" value="262"/>
+                    <property name="tmsCode" value="107"/>
+                    <property name="sourceId" value="2"/>
+                </bean> -->
             </list>
         </constructor-arg>
     </bean>
