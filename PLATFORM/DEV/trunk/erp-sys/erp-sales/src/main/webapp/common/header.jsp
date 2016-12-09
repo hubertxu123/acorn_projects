@@ -1,50 +1,47 @@
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html;charset=UTF-8" %>
 <%@ include file="/common/taglibs.jsp" %>
-<c:if test="${sessionScope.isLoadCtiServer}" >
+<%--<c:if test="${sessionScope.isLoadCtiServer}" >--%>
+    <%--<div id="div_appletFrame" style="width: 0px;height: 0px">--%>
+        <%--<applet id="SoftPhone"--%>
+                <%--code="com.esoon.softphone.core.Bootstrap.class"--%>
+                <%--codebase="./static/plugin/"--%>
+                <%--width=0--%>
+                <%--height=0--%>
+                <%--archive="--%>
+			<%--log4j-1.2.15.jar,--%>
+ 			<%--apptemplate.jar,--%>
+            <%--commons.jar,--%>
+			<%--configurationprotocol.jar,--%>
+			<%--connection.jar,--%>
+			<%--kvlistbinding.jar,--%>
+			<%--kvlists.jar,--%>
+			<%--logging.jar,--%>
+			<%--messagebrokerappblock.jar,--%>
+			<%--packagedstatisticsdeprecated.jar,--%>
+			<%--protocol.jar,--%>
+			<%--protocolmanagerappblock.jar,--%>
+			<%--switchpolicy.jar,--%>
+			<%--system.jar,--%>
+			<%--voiceprotocol.jar,--%>
+			<%--managementprotocol.jar,--%>
+			<%--warmstandbyappblock.jar,--%>
+			<%--gson-2.2.2.jar,--%>
+			<%--Softphone-14.5.14.jar,--%>
+			<%--jackson-all-1.7.1.jar"--%>
+            <%-->--%>
+            <%--<param name="tServerHost" value="${sessionScope.cti_host}" />--%>
+            <%--<param name="tServerPort" value="${sessionScope.cti_port}" />--%>
+            <%--<param name="bkpTServerHost" value="${sessionScope.cti_host_back}" />--%>
+            <%--<param name="bkpTServerPort" value="${sessionScope.cti_port_back}" />--%>
+            <%--<param name="thisDN" value="${sessionScope.cti_dn}" />--%>
+            <%--<param name="quere" value="" />--%>
+            <%--<param name="agentId" value="${sessionScope.cti_agentId}" />--%>
+            <%--<param name="type" value="application/x-java-applet;jpi-version=${sessionScope.cti_jreVersion}" />--%>
+            <%--<param name="mediaType" value="voice" />--%>
+        <%--</applet>--%>
 
-
-
-    <div id="div_appletFrame" style="width: 0px;height: 0px">
-        <applet id="SoftPhone"
-                code="com.esoon.softphone.core.Bootstrap.class"
-                codebase="./static/plugin/"
-                width=0
-                height=0
-                archive="
-			log4j-1.2.15.jar,
- 			apptemplate.jar,
-            commons.jar,
-			configurationprotocol.jar,
-			connection.jar,
-			kvlistbinding.jar,
-			kvlists.jar,
-			logging.jar,
-			messagebrokerappblock.jar,
-			packagedstatisticsdeprecated.jar,
-			protocol.jar,
-			protocolmanagerappblock.jar,
-			switchpolicy.jar,
-			system.jar,
-			voiceprotocol.jar,
-			managementprotocol.jar,
-			warmstandbyappblock.jar,
-			gson-2.2.2.jar,
-			Softphone-14.5.14.jar,
-			jackson-all-1.7.1.jar"
-            >
-            <param name="tServerHost" value="${sessionScope.cti_host}" />
-            <param name="tServerPort" value="${sessionScope.cti_port}" />
-            <param name="bkpTServerHost" value="${sessionScope.cti_host_back}" />
-            <param name="bkpTServerPort" value="${sessionScope.cti_port_back}" />
-            <param name="thisDN" value="${sessionScope.cti_dn}" />
-            <param name="quere" value="" />
-            <param name="agentId" value="${sessionScope.cti_agentId}" />
-            <param name="type" value="application/x-java-applet;jpi-version=${sessionScope.cti_jreVersion}" />
-            <param name="mediaType" value="voice" />
-        </applet>
-
-    </div>
-</c:if>
+    <%--</div>--%>
+<%--</c:if>--%>
 
 <div id="head">
     <input type="hidden" id="cti_host" value="${sessionScope.cti_host}"/>
@@ -68,7 +65,13 @@
                     <button onclick="javascript: phone.changeStatus(-1);">摘机状态</button>
                     <button onclick="javascript:bottomLeft('','','','');">左下</button>
                     <button onclick="javascript:bottomRight('','','','');">右下</button>
-                    <%--<button onclick="javascript:muteOn();">打开静音</button>--%>
+                    <input type="text" id="phoneInput" style="display: none;"/>
+                    <input type="text" name="callID" id="callID" value="" style="display:none;">
+                    <input type="text" name="remoteID" id="remoteID" value="" style="display:none;">
+                    <button id="outPhoneBtn" onclick="javascript:outPhone();"  style="display: none;">呼叫</button>
+                    <button id="pickupPhoneBtn" onclick="javascript:pickupPhone();"  style="display: none;">摘机</button>
+                    <button id="shutdomnPhoneBtn" onclick="javascript:shutdownPhone();"  style="display: none;">挂断</button>
+                    <button id="logoutBtn" onclick="javascript:agentBarLogout();">退出</button>
                     <%--<button onclick="javascript:muteOff();">关闭静音</button>--%>
 
                     <span id="ctiStatus" name="ctiStatus"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -242,3 +245,7 @@
         </tr>
     </table>
 </div>
+
+<object id="plugin0" type="application/x-lagentbar" width="0" height="0">
+    <param name="onload" value="pluginValid" />
+</object>

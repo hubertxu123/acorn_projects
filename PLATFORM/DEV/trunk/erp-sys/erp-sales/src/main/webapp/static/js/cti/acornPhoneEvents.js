@@ -27,6 +27,9 @@ function onOffHook(ani,dnsi,tollFreeNum,isOutBoound,company,province){
 function onReady(ani,dnsi,tollFreeNum,isOutBoound,company,province){
 
     $('#callContext').html('<span class="incoming fl"></span>');
+    $('#phoneInput').show();
+    $('#outPhoneBtn').show();
+    $('#shutdownPhoneBtn').hide();
     $('#wrapper').removeAttr("class").addClass('onReady');
 
 
@@ -253,6 +256,9 @@ function onTalking(ani,dnsi,tollFreeNum,isOutBoound,company,province){
  * 呼出中 5
  */
 function onDialing(ani,dnsi,tollFreeNum,isOutBoound,company,province){
+    $('#outPhoneBtn').hide();
+    $('#pickupPhoneBtn').show();
+    $('#shutdomnPhoneBtn').show();
     $('#callContext').css({'width':30,'padding-left':0,'padding-right':0,'margin-right':'0'});
     $('#callContext').html('<span class="insure">'+ phone.insure+'</span><span class="incoming incoming_ac fl"></span>' +
         '<span class="callin fl">' +
@@ -2176,6 +2182,7 @@ function ctilogin(){
 
 function closeSales(){
     agentLogout();
+    agentBarLogout();
     $.ajax({
         type : "get",
         url : "/logout",

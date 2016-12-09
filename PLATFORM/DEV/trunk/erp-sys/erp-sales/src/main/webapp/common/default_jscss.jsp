@@ -37,3 +37,6 @@
 
 <script type="text/javascript" src="${ctx}/static/js/jquery.marquee.js"></script>
 <script type="text/javascript" src="${ctx}/static/js/myorder/orderpop.js"></script>
+
+<script type="text/javascript" src="${ctx}/static/js/cti/new-cti-api.js"></script>
+<script type="text/javascript" src="${ctx}/static/js/jquery.timers-1.2.js"></script>

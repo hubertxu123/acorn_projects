@@ -2,7 +2,7 @@
 
   (function(){
     //禁用右键、文本选择功能、刷新
-    $(document).bind("contextmenu",function(){return false;});
+    //$(document).bind("contextmenu",function(){return false;});
     $(document).bind("start",function(){return false;});
     window.onunload =  function()
     {
