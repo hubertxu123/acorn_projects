@@ -124,11 +124,11 @@ public class CommonServiceImpl implements CommonService{
                         leadService.saveLead(lead);
                         Lead mylead = leadService.get(vo.getLeadId()) ;
                         //创建任务
-                        instId= campaignBPMTaskService.createMarketingTask(
-                              vo.getLeadId()+"", vo.getCaID(), vo.getConid(),dto.getH_ispotential(),vo.getPdCustomerId(),
-                   user.getUserId(), mylead.getEndDate(),
-                              dto.getContactTime().equals("") ? null : DateUtil.stringToDate(dto.getContactTime()),
-                              CampaignTaskSourceType.CALLBACK.getIndex(), leadType.getName()+","+dto.getRemark());
+//                        instId= campaignBPMTaskService.createMarketingTask(
+//                              vo.getLeadId()+"", vo.getCaID(), vo.getConid(),dto.getH_ispotential(),vo.getPdCustomerId(),
+//                   user.getUserId(), mylead.getEndDate(),
+//                              dto.getContactTime().equals("") ? null : DateUtil.stringToDate(dto.getContactTime()),
+//                              CampaignTaskSourceType.CALLBACK.getIndex(), leadType.getName()+","+dto.getRemark());
                         message="新建任务成功";
                         endTime = System.currentTimeMillis();
                         logger.info("hook::::commonService.phoneHook::新建任务::"+(endTime-startTime));

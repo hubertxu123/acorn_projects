@@ -27,7 +27,8 @@ public class SecurityConstants {
 
 	
 	public static final String 	USER_TRACK  = "USER_TRACK";
-	
+	public static final String 	ROLE_SHOW_FULL_PHONE  = "USER_TRACK";
+
 	public static final String 	LDAP_ROOT_DN  = "dc=chinadrtv,dc=com";//outbound部门主管角色
 	
 	public static final String 	ROLE_APPROVE_MANAGER  = "APPROVE_MANAGER";//审批权限

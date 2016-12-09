@@ -42,7 +42,7 @@
     </bean>
 
     <bean id="wmsSessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
-        <property name="dataSource" ref="wmsDataSource" />
+        <property name="dataSource" ref="dataSource" />
         <property name="configLocation" value="classpath:com/chinadrtv/erp/ic/hibernate.cfg.xml"/>
         <property name="hibernateProperties">
             <value>
@@ -61,7 +61,7 @@
     
     <!-- Hibernate SessionFactory -->
     <bean id="sessionFactorySms" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
-        <property name="dataSource" ref="dataSourceSms"/>
+        <property name="dataSource" ref="dataSource"/>
         <property name="configLocation" value="classpath:hibernate_sms.cfg.xml"/>
         <property name="hibernateProperties">
             <value>
@@ -83,7 +83,7 @@
     </bean>
     
     <bean id="sessionFactoryCtb" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
-        <property name="dataSource" ref="cntrpbankDataSource"/>
+        <property name="dataSource" ref="dataSource"/>
         <property name="configLocations">
         	<list>
         		<value>classpath*:com/chinadrtv/erp/uc/hibernate.cfg.xml</value>
@@ -110,7 +110,7 @@
     </bean>
 
     <bean id="ivrcbSessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
-        <property name="dataSource" ref="ivrcbDataSource"/>
+        <property name="dataSource" ref="dataSource"/>
         <property name="configLocations">
             <list />
         </property>
@@ -129,11 +129,6 @@
         <property name="schemaUpdate">
             <value>false</value>
         </property>
-    </bean>
-
-    <bean id="ivrcbDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
-        <property name="jndiName" value="${ivrcbJndiName}" />
-        <property name="resourceRef" value="true"/>
     </bean>
 
         

@@ -17,7 +17,7 @@ public class SalesSessionServiceImpl implements SalesSessionService {
 	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory
 			.getLogger(SalesSessionServiceImpl.class);
 
-	@Autowired
+//	@Autowired
 	private SalesSessionRegistry sessionRegistry;
 
 	@ReadThroughSingleCache(namespace = "com.chinadrtv.erp.sales.service.SalesSessionService", expiration = 600000)

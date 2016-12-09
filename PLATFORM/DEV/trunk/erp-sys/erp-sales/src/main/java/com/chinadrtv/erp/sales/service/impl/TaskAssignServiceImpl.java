@@ -12,13 +12,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.chinadrtv.erp.marketing.core.dto.CampaignReceiverDto;
 import com.chinadrtv.erp.marketing.core.service.CampaignBPMTaskService;
 import com.chinadrtv.erp.marketing.core.service.CampaignReceiverService;
-import com.chinadrtv.erp.sales.controller.TaskAssignController;
 import com.chinadrtv.erp.sales.service.TaskAssignService;
 import com.chinadrtv.erp.user.model.AgentUser;
 import com.chinadrtv.erp.user.service.UserService;
@@ -43,7 +41,7 @@ import com.chinadrtv.erp.user.service.UserService;
 @Service
 public class TaskAssignServiceImpl implements TaskAssignService {
 
-	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(TaskAssignController.class);
+	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(TaskAssignServiceImpl.class);
 	
 	@Autowired
 	private UserService userService;

@@ -245,13 +245,13 @@
 			<version>2.4.2</version>
 		</dependency>
 
-		<dependency>
-			<groupId>org.jboss.soa.bpel.dependencies.esb</groupId>
-			<artifactId>jbossesb-rosetta</artifactId>
-			<version>4.11</version>
-			<type>jar</type>
-			<scope>provided</scope>
-		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>org.jboss.soa.bpel.dependencies.esb</groupId>-->
+			<!--<artifactId>jbossesb-rosetta</artifactId>-->
+			<!--<version>4.11</version>-->
+			<!--<type>jar</type>-->
+			<!--<scope>provided</scope>-->
+		<!--</dependency>-->
 		<dependency>
 			<groupId>javax.jms</groupId>
 			<artifactId>jms</artifactId>
@@ -289,18 +289,18 @@
 			<type>jar</type>
 		</dependency>
 
-		<dependency>
-			<groupId>org.apache.cxf</groupId>
-			<artifactId>cxf-parent</artifactId>
-			<version>2.2.12-patch-03</version>
-			<type>pom</type>
-		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>org.apache.cxf</groupId>-->
+			<!--<artifactId>cxf-parent</artifactId>-->
+			<!--<version>2.2.12-patch-03</version>-->
+			<!--<type>pom</type>-->
+		<!--</dependency>-->
 
-		<dependency>
-			<groupId>org.jboss.client</groupId>
-			<artifactId>jbossall-client</artifactId>
-			<version>5.0.0.Beta4</version>
-		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>org.jboss.client</groupId>-->
+			<!--<artifactId>jbossall-client</artifactId>-->
+			<!--<version>5.0.0.Beta4</version>-->
+		<!--</dependency>-->
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpcore</artifactId>

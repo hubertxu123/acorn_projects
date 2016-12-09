@@ -48,20 +48,20 @@ import com.chinadrtv.erp.bpm.service.BpmProcessService;
 @Service("bpmProcessService")
 public class BpmProcessServiceImpl implements BpmProcessService{
 
-	@Autowired
-	private RuntimeService runtimeService;
+//	@Autowired
+//	private RuntimeService runtimeService;
 	
-	@Autowired
-	private IdentityService identityService;
+//	@Autowired
+//	private IdentityService identityService;
 	
-	@Autowired
-	private TaskService taskService;
+//	@Autowired
+//	private TaskService taskService;
 	
-	@Autowired
-	private FormService formService;
+//	@Autowired
+//	private FormService formService;
 	
-	@Autowired
-	private HistoryService historyService;
+//	@Autowired
+//	private HistoryService historyService;
 	
 	/* (非 Javadoc)
 	* <p>Title: startProcessInstance</p>
@@ -71,13 +71,15 @@ public class BpmProcessServiceImpl implements BpmProcessService{
 	* @see com.chinadrtv.erp.bpm.service.BpmProcessService#startProcessInstance(java.lang.String)
 	*/ 
 	public String startProcessInstance(String processKey) {
-		ProcessInstance instance = runtimeService.startProcessInstanceByKey(processKey);
-		return instance.getProcessInstanceId();
+//		ProcessInstance instance = runtimeService.startProcessInstanceByKey(processKey);
+//		return instance.getProcessInstanceId();
+		return null;
 	}
 	
 	public String startProcessInstanceById(String processDefinitionId) {
-		ProcessInstance instance = runtimeService.startProcessInstanceById(processDefinitionId);
-		return instance.getProcessInstanceId();
+//		ProcessInstance instance = runtimeService.startProcessInstanceById(processDefinitionId);
+//		return instance.getProcessInstanceId();
+		return null;
 	}
 
 	/**
@@ -90,9 +92,10 @@ public class BpmProcessServiceImpl implements BpmProcessService{
 	*/ 
 	public String startProcessInstance(String processKey,String businessKey, String startUser) {
 		//指定发起人
-		identityService.setAuthenticatedUserId(startUser);
-		ProcessInstance instance = runtimeService.startProcessInstanceByKey(processKey,businessKey);
-		return instance.getProcessInstanceId();
+//		identityService.setAuthenticatedUserId(startUser);
+//		ProcessInstance instance = runtimeService.startProcessInstanceByKey(processKey,businessKey);
+//		return instance.getProcessInstanceId();
+		return null;
 	}
 	
 	/**
@@ -108,9 +111,10 @@ public class BpmProcessServiceImpl implements BpmProcessService{
 	 */
 	public String startProcessInstance(String processKey,String businessKey, String startUser,Map<String,Object> var) {
 		//指定发起人
-		identityService.setAuthenticatedUserId(startUser);
-		ProcessInstance instance = runtimeService.startProcessInstanceByKey(processKey,businessKey,var);
-		return instance.getProcessInstanceId();
+//		identityService.setAuthenticatedUserId(startUser);
+//		ProcessInstance instance = runtimeService.startProcessInstanceByKey(processKey,businessKey,var);
+//		return instance.getProcessInstanceId();
+		return null;
 	}
 	
 
@@ -124,53 +128,53 @@ public class BpmProcessServiceImpl implements BpmProcessService{
 	public void completeByProcessInsId(String processDefId,String processInsId,String user) {
 		
 		//获取已领取任务
-		List<Task> unsignedTasks = taskService.createTaskQuery().processDefinitionKey(processDefId).processInstanceId(processInsId).taskAssignee(user).active().list();
-		
-		for(Task t:unsignedTasks){
-			//签收任务
-			taskService.claim(t.getId(), user);
-
-			Map<String,Object> v = new HashMap<String, Object>();
-			v.put("user", user);
-			//完成任务
-			taskService.complete(t.getId(), v);
-		}
+//		List<Task> unsignedTasks = taskService.createTaskQuery().processDefinitionKey(processDefId).processInstanceId(processInsId).taskAssignee(user).active().list();
+//
+//		for(Task t:unsignedTasks){
+//			//签收任务
+//			taskService.claim(t.getId(), user);
+//
+//			Map<String,Object> v = new HashMap<String, Object>();
+//			v.put("user", user);
+//			//完成任务
+//			taskService.complete(t.getId(), v);
+//		}
 	}
 	
 	public void completeByTaskID(String processDefId,String processInsId,String taskID, String user) {
 		
 		//获取已领取任务
-		List<Task> unsignedTasks = taskService.createTaskQuery().processDefinitionKey(processDefId).taskId(taskID)
-				.processInstanceId(processInsId).taskAssignee(user).active().list();
-		
-		for(Task t:unsignedTasks){
-			//签收任务
-			taskService.claim(t.getId(), user);
-
-			Map<String,Object> v = new HashMap<String, Object>();
-			v.put("user", user);
-			//完成任务
-			taskService.complete(t.getId(), v);
-
-		}
+//		List<Task> unsignedTasks = taskService.createTaskQuery().processDefinitionKey(processDefId).taskId(taskID)
+//				.processInstanceId(processInsId).taskAssignee(user).active().list();
+//
+//		for(Task t:unsignedTasks){
+//			//签收任务
+//			taskService.claim(t.getId(), user);
+//
+//			Map<String,Object> v = new HashMap<String, Object>();
+//			v.put("user", user);
+//			//完成任务
+//			taskService.complete(t.getId(), v);
+//
+//		}
 	}
 	
 	public void completeTaskByInstID(String instID, Map<String,Object> v, String user) {
-		List<Task> unsignedTasks = taskService.createTaskQuery().processInstanceId(instID).active().list();
-		for(Task t:unsignedTasks){
-			//签收任务
-			taskService.claim(t.getId(), user);
-			v.put("user", user);
-			//完成任务
-			taskService.complete(t.getId(), v);
-		}
+//		List<Task> unsignedTasks = taskService.createTaskQuery().processInstanceId(instID).active().list();
+//		for(Task t:unsignedTasks){
+//			//签收任务
+//			taskService.claim(t.getId(), user);
+//			v.put("user", user);
+//			//完成任务
+//			taskService.complete(t.getId(), v);
+//		}
 	}
 	
 	public void submitTaskForm(String instID, Map<String, String> formProperties) {
-		List<Task> unsignedTasks = taskService.createTaskQuery().processInstanceId(instID).active().list();
-		for(Task t:unsignedTasks){
-			formService.submitTaskFormData(t.getId(), formProperties);
-		}
+//		List<Task> unsignedTasks = taskService.createTaskQuery().processInstanceId(instID).active().list();
+//		for(Task t:unsignedTasks){
+//			formService.submitTaskFormData(t.getId(), formProperties);
+//		}
 	}
 	
 	/**
@@ -186,24 +190,25 @@ public class BpmProcessServiceImpl implements BpmProcessService{
 	 */
 	public Map<String,String> queryTaskAssignee(String processDefId,String user,int firstResult,int maxResults) {
 		
-		Map<String,String> result = new HashMap<String, String>();
-		List<Task> unsignedTasks =null;
-		//获取已领取任务
-		if(processDefId!=null){
-			unsignedTasks = taskService.createTaskQuery().processDefinitionKey(processDefId).taskAssignee(user).active().listPage(firstResult, maxResults);
-		}else{
-			unsignedTasks = taskService.createTaskQuery().taskAssignee(user).active().listPage(firstResult, maxResults);
-		}
-		
-		
-		for(Task t:unsignedTasks){
-			//根据流程实例Id，查询流程实例信息
-			ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(t.getProcessInstanceId()).active()
-								.singleResult();
-			result.put(processInstance.getBusinessKey(),t.getName() );
-		}
-		
-		return result;
+//		Map<String,String> result = new HashMap<String, String>();
+//		List<Task> unsignedTasks =null;
+//		//获取已领取任务
+//		if(processDefId!=null){
+//			unsignedTasks = taskService.createTaskQuery().processDefinitionKey(processDefId).taskAssignee(user).active().listPage(firstResult, maxResults);
+//		}else{
+//			unsignedTasks = taskService.createTaskQuery().taskAssignee(user).active().listPage(firstResult, maxResults);
+//		}
+//
+//
+//		for(Task t:unsignedTasks){
+//			//根据流程实例Id，查询流程实例信息
+////			ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(t.getProcessInstanceId()).active()
+////								.singleResult();
+////			result.put(processInstance.getBusinessKey(),t.getName() );
+//		}
+//
+//		return result;
+		return null;
 	}
 
 	
@@ -230,54 +235,57 @@ public class BpmProcessServiceImpl implements BpmProcessService{
 	 * @since  1.0.0
 	 */
 	public List<String> queryTaskByAssigneeAndInstance(String user, String instID) {
-		List<String> ids = new ArrayList<String>();
-		TaskQuery tq = taskService.createTaskQuery().active();
-		if(StringUtils.isNotBlank(user)) {
-			tq = tq.taskAssignee(user);
-		}
-		if(StringUtils.isNotBlank(instID)) {
-			tq = tq.processInstanceId(instID);
-		}
-		List<Task> tasks = tq.list();
-		if(tasks != null) {
-			for(Task t : tasks) {
-				ids.add(t.getId());
-			}
-		}
-		return ids;
+//		List<String> ids = new ArrayList<String>();
+//		TaskQuery tq = taskService.createTaskQuery().active();
+//		if(StringUtils.isNotBlank(user)) {
+//			tq = tq.taskAssignee(user);
+//		}
+//		if(StringUtils.isNotBlank(instID)) {
+//			tq = tq.processInstanceId(instID);
+//		}
+//		List<Task> tasks = tq.list();
+//		if(tasks != null) {
+//			for(Task t : tasks) {
+//				ids.add(t.getId());
+//			}
+//		}
+//		return ids;
+		return null;
 	}
 	
 	public List<String> queryHistTaskByInstID(String instID) {
-		List<String> ids = new ArrayList<String>();
-		List<HistoricTaskInstance> histTasks = historyService
-				.createHistoricTaskInstanceQuery()
-				.processInstanceId(instID)
-				.list();
-		for(HistoricTaskInstance hti : histTasks) {
-			ids.add(hti.getId());
-		}
-		return ids;
+//		List<String> ids = new ArrayList<String>();
+//		List<HistoricTaskInstance> histTasks = historyService
+//				.createHistoricTaskInstanceQuery()
+//				.processInstanceId(instID)
+//				.list();
+//		for(HistoricTaskInstance hti : histTasks) {
+//			ids.add(hti.getId());
+//		}
+//		return ids;
+		return null;
 	}
 	
 	public Map<String, String> getFromPropertiesByTaskID(String taskID) {
-		Map<String, String> taskFormProperties = new HashMap<String, String>();
-		List<HistoricDetail> historyVariables = historyService
-				.createHistoricDetailQuery()
-				.taskId(taskID)
-				.formProperties().list();
-		for(HistoricDetail hd : historyVariables) {
-			HistoricFormProperty formProperty = (HistoricFormProperty) hd;
-			taskFormProperties.put(formProperty.getPropertyId(), formProperty.getPropertyValue());
-		}
-		return taskFormProperties;
+//		Map<String, String> taskFormProperties = new HashMap<String, String>();
+//		List<HistoricDetail> historyVariables = historyService
+//				.createHistoricDetailQuery()
+//				.taskId(taskID)
+//				.formProperties().list();
+//		for(HistoricDetail hd : historyVariables) {
+//			HistoricFormProperty formProperty = (HistoricFormProperty) hd;
+//			taskFormProperties.put(formProperty.getPropertyId(), formProperty.getPropertyValue());
+//		}
+//		return taskFormProperties;
+		return null;
 	}
 	
 	public void changeTaskOwner(String taskID, String newOwner) {
-		taskService.setOwner(taskID, newOwner);
+//		taskService.setOwner(taskID, newOwner);
 	}
 
 	public void cancelInstance(String instID, String remark) {
-		runtimeService.deleteProcessInstance(instID, remark);
+//		runtimeService.deleteProcessInstance(instID, remark);
 	}
 	
 }

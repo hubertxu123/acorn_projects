@@ -58,7 +58,7 @@
         <tr>
             <td>
                 <img width="30" id="cti_onAndOff" height="30px" class="fl" style="vertical-align: middle" src="/static/images/phone-lamp-gray.png"/>
-                <span class="logo" id="logo">橡果销售管理系统
+                <span class="logo" id="logo">销售管理系统
 
                     <!--
                     <a href="javascript:alert(phone.status);">++</a>
@@ -72,16 +72,7 @@
                     <%--<button onclick="javascript:muteOff();">关闭静音</button>--%>
 
                     <span id="ctiStatus" name="ctiStatus"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <script type="text/javascript">
-                        try{
-                            if(document.SoftPhone.isActive()){
-                                console.info("安装了JRE");
-                            }
-                        }catch(error){
-                            console.info("没安装JRE");
-                            document.write("  <a id='cti_jre' href='${ctx}/static/plugin/CTI_JRE.zip'>下载CTI_JRE插件</a>");
-                        }
-                    </script>
+
 
 
                     <!-- <button id="calling">外呼通话中</button> <button onclick="javascript:alert(phone.status);">getStatus</button> -->

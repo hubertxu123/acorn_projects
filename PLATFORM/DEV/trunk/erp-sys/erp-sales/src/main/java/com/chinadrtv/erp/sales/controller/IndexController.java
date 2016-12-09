@@ -81,12 +81,12 @@ public class IndexController extends BaseController {
     @RequestMapping("/home/home")
     public ModelAndView home() throws Exception {
     	ModelAndView mav = new ModelAndView("home/home");
-    	AgentUser user = SecurityHelper.getLoginUser();
-		String userId = user.getUserId();
-		String department = user.getDepartment();
+//    	AgentUser user = SecurityHelper.getLoginUser();
+//		String userId = user.getUserId();
+//		String department = user.getDepartment();
     	//TODO change to the real data
-    	mav.addObject("userID", userId);
-		mav.addObject("department", department);
+    	mav.addObject("userID", 1);
+		mav.addObject("department", 2);
         return mav;
     }
 
@@ -135,21 +135,20 @@ public class IndexController extends BaseController {
   }
     
 	@RequestMapping("/index")
-	public ModelAndView index(HttpServletRequest request,
-			@ModelAttribute("BASE64_PASSWORD") String password)
+	public ModelAndView index(HttpServletRequest request)
 			throws Exception {
 		logger.info("index is display");
-		AgentUser user = SecurityHelper.getLoginUser();
+//		AgentUser user = SecurityHelper.getLoginUser();
 		ModelAndView mav = new ModelAndView("index");
-		
-		String usr = user.getUserId();
-		String requestIp = IpUtils.getRequestIp(request);
-		String ts = DateUtil.formatCurrentDate(DateUtil.FORMAT_DATE_LINE);
-
-		mav.addObject("knowledgeUrl", String.format(knowledgeUrl + "?%s",
-				Base64Encryptor.encrypt(encrypt(usr, password, requestIp, ts))));
-		mav.addObject("distributionUrl", String.format(distributionUrl + "?%s",
-				Base64Encryptor.encrypt(encrypt(usr, password, requestIp, ts))));
+//
+//		String usr = user.getUserId();
+//		String requestIp = IpUtils.getRequestIp(request);
+//		String ts = DateUtil.formatCurrentDate(DateUtil.FORMAT_DATE_LINE);
+//
+//		mav.addObject("knowledgeUrl", String.format(knowledgeUrl + "?%s",
+//				Base64Encryptor.encrypt(encrypt(usr, password, requestIp, ts))));
+//		mav.addObject("distributionUrl", String.format(distributionUrl + "?%s",
+//				Base64Encryptor.encrypt(encrypt(usr, password, requestIp, ts))));
 		return mav;
 	}
     

@@ -36,7 +36,7 @@ public class SessionInvalidation implements Filter {
 
     private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(SessionInvalidation.class);
 
-    @Autowired
+//    @Autowired
     private SalesSessionRegistry sessionRegistry;
 
     @Autowired
