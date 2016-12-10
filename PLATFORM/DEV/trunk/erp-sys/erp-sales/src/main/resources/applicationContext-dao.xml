@@ -15,10 +15,10 @@
 		<property name="configLocations">
             <list>
                <!--  <value>classpath*:sales.hibernate.cfg.xml</value>  --> 
-                <value>classpath*:com/chinadrtv/erp/marketing/core/hibernate.cfg.xml</value>
-                <value>classpath*:com/chinadrtv/erp/sales/core/hibernate.cfg.xml</value>
-                <value>classpath*:com/chinadrtv/erp/ic/hibernate.cfg.xml</value>
-                <value>classpath*:com/chinadrtv/erp/uc/hibernate.cfg.xml</value>
+                <!--<value>classpath*:com/chinadrtv/erp/marketing/core/hibernate.cfg.xml</value>-->
+                <!--<value>classpath*:com/chinadrtv/erp/sales/core/hibernate.cfg.xml</value>-->
+                <!--<value>classpath*:com/chinadrtv/erp/ic/hibernate.cfg.xml</value>-->
+                <!--<value>classpath*:com/chinadrtv/erp/uc/hibernate.cfg.xml</value>-->
                 <value>classpath*:hibernate.cfg.xml</value>
             </list>
         </property>

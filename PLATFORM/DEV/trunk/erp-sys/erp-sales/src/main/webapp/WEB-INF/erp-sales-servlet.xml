@@ -11,14 +11,6 @@
 
     <context:component-scan base-package="com.chinadrtv.erp.sales.controller" />
 
-    <bean id="ctrlLogger" class="com.chinadrtv.erp.sales.util.ControllerLogTracer">
-        <property name="prefixInludeTypeList">
-              <list>
-                <value>java.util.ArrayList</value>
-              </list>
-        </property>
-    </bean>
-
     <aop:aspectj-autoproxy proxy-target-class="true"/>
 
 

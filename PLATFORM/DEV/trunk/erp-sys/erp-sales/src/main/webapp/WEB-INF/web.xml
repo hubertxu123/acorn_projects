@@ -11,12 +11,12 @@
     <param-name>contextConfigLocation</param-name>
     <param-value>
             classpath:applicationContext-resources.xml
-            classpath:applicationContext-dao.xml
-            classpath:applicationContext-service.xml
+            <!--classpath:applicationContext-dao.xml-->
+            <!--classpath:applicationContext-service.xml-->
     		<!--classpath:applicationContext-bpm.xml-->
-    		classpath:applicationContext-activemq-client.xml
+    		<!--classpath:applicationContext-activemq-client.xml-->
     		<!--classpath:applicationContext-security.xml-->
-            classpath:applicationContext-quartz.xml
+            <!--classpath:applicationContext-quartz.xml-->
         </param-value>
   </context-param>
       <context-param>  
@@ -35,15 +35,6 @@
     <filter-name>encoding</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-  
-  <filter>
-		<filter-name>SecurityUserFilter</filter-name>
-		<filter-class>com.chinadrtv.erp.user.filter.SecurityFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>SecurityUserFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
 	
   <filter>
     <filter-name>OpenSessionInViewFilter</filter-name>
