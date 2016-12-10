@@ -12,11 +12,16 @@
     <name>com.chinadrtv.erp.sales</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-          <logback.version>1.0.7</logback.version>
+        <logback.version>1.0.7</logback.version>
         <slf4j.version>1.7.2</slf4j.version>
         <druid.version>1.0.5</druid.version>
         <maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
         <sales.build.timestamp>${maven.build.timestamp}</sales.build.timestamp>
+        <spring.version>4.1.6.RELEASE</spring.version>
+        <springSecurity.version>4.0.1.RELEASE</springSecurity.version>
+        <!--<mybatis.version>3.2.8</mybatis.version>-->
+        <!--<mybatisSpring.version>1.2.2</mybatisSpring.version>-->
+        <!--<mybatisEhcache.version>1.0.0</mybatisEhcache.version>-->
     </properties>
     <profiles>
         <profile>
@@ -276,23 +281,97 @@
         </plugins>
     </build>
     <dependencies>
+        <!-- Spring -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <!-- Spring MVC -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-expression</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${springSecurity.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${springSecurity.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.mybatis</groupId>-->
+            <!--<artifactId>mybatis</artifactId>-->
+            <!--<version>${mybatis.version}</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.mybatis</groupId>-->
+            <!--<artifactId>mybatis-ehcache</artifactId>-->
+            <!--<version>${mybatisEhcache.version}</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.mybatis</groupId>-->
+            <!--<artifactId>mybatis-spring</artifactId>-->
+            <!--<version>${mybatisSpring.version}</version>-->
+        <!--</dependency>-->
+        <dependency>
+            <groupId>org.springframework.ws</groupId>
+            <artifactId>spring-oxm-tiger</artifactId>
+            <version>1.5.4</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>1.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>1.1.0.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>5.0.1.Final</version>
+        </dependency>
+
+
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
             <version>2.5</version>
             <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.mail</groupId>
-            <artifactId>mail</artifactId>
-            <version>1.4.5</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.quartz-scheduler</groupId>
-            <artifactId>quartz</artifactId>
-            <version>1.8.5</version>
         </dependency>
 
         <dependency>
@@ -460,13 +539,6 @@
         </dependency>
 
         <dependency>
-            <groupId>quartz</groupId>
-            <artifactId>quartz</artifactId>
-            <version>1.5.2</version>
-            <type>pom</type>
-        </dependency>
-
-        <dependency>
             <groupId>com.fasterxml</groupId>
             <artifactId>jackson-module-hibernate</artifactId>
             <version>1.9.1</version>
@@ -501,11 +573,11 @@
         </dependency>
 
 
-        <dependency>
-            <groupId>acorn.erp</groupId>
-            <artifactId>com.chinadrtv.erp.core</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>acorn.erp</groupId>-->
+            <!--<artifactId>com.chinadrtv.erp.core</artifactId>-->
+            <!--<version>1.0.0-SNAPSHOT</version>-->
+        <!--</dependency>-->
 
         <!--<dependency>-->
             <!--<groupId>acorn.erp</groupId>-->

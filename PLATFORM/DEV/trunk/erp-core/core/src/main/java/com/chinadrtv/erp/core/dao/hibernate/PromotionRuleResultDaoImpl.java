@@ -25,7 +25,7 @@ public class PromotionRuleResultDaoImpl extends GenericDaoHibernate<PromotionRul
 	}
 
     public List<PromotionRuleResult> findByOrderId(Long orderId) {
-        return getHibernateTemplate().find("from PromotionRuleResult  p where p.orderId=?", orderId);
+        return null;
     }
 
     @Autowired

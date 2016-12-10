@@ -1,7 +1,7 @@
 package com.chinadrtv.erp.sales.dto;
 
 /**
- * Created by xgq on 2016/12/5.
+ * Created by xgq on 2016/12/11.
  */
 public class User {
     private String username;

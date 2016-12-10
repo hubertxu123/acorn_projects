@@ -17,8 +17,8 @@ http://union.yihaodian.com/passport/viewBankInfo.do
 <li><a id="callbackAssign" class="phoneBook" href="${distributionUrl}" target="_blank">话务分配管理</a></li>
 <li><a id="complain" class="complain leftMenu" name="/complain/complain"  multiTab="false" href="javascript:void(0)" >生成投诉</a></li>
 
- <sec:authorize ifAllGranted="CTI_SESSION_MANAGER">
+ <%--<sec:authorize ifAllGranted="CTI_SESSION_MANAGER">--%>
 <li><a id="userManagement" class="orderTaker leftMenu" name="/userManagement/userManagement"  multiTab="false">在线用户管理</a></li>
 
-   </sec:authorize>
+   <%--</sec:authorize>--%>
 </ul>

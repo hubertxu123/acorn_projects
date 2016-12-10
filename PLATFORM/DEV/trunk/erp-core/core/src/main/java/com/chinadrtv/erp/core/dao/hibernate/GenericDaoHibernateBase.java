@@ -148,7 +148,7 @@ public abstract class GenericDaoHibernateBase<T, PK extends Serializable> implem
             values[index++] = queryParams.get(s);
         }
 
-        return hibernateTemplate.findByNamedQueryAndNamedParam(queryName, params, values);
+        return null;
     }
 
     public void saveOrUpdate(T object) {
