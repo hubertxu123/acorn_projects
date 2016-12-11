@@ -111,7 +111,7 @@ function addCallEvent() {
 
         if (callState == "CS_INCOMING") {
             $("#callID").val(callID);
-            $("#phoneInput").val(callID);
+            $("#phoneInput").val(ani);
             $("#remoteID").val(ani);
             onRinging();
         }
@@ -232,7 +232,7 @@ function agentLogin() {
 
 function outPhone() {
     var phone = $("#phoneInput").val();
-    var calledUUI = "gw1";
+    var calledUUI = "gw=gw1";
 
     plugin().makeCall(phone, calledUUI);
 }
