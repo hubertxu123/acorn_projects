@@ -27,17 +27,11 @@ function onOffHook(ani,dnsi,tollFreeNum,isOutBoound,company,province){
 function onReady(ani,dnsi,tollFreeNum,isOutBoound,company,province){
 
     $('#callContext').html('<span class="incoming fl"></span>');
-    $('#phoneInput').show();
-    $('#outPhoneBtn').show();
-    $('#shutdownPhoneBtn').hide();
     $('#wrapper').removeAttr("class").addClass('onReady');
 
 
     $('#state a.c_btn').html('就绪').attr('for','leave').unbind().bind('click',function(){changeS(this);});
     console.log('5+就绪'+_source);
-//    if(typeof(_source)== "undefined"){
-//        ready(); console.info("ready:"+12);
-//    }
 
     $('#state').unbind().bind('click',function(){toggleS()});
     $('a.logout').unbind();
@@ -49,15 +43,13 @@ function onReady(ani,dnsi,tollFreeNum,isOutBoound,company,province){
         outCall(phone);
     });
     $('#transferPhoneBtn').unbind();
-//    $('#notelist').combo('onShowPanel',function(a,b){
-//                  alert(a +"   "+b);
-//    })
-//    $('#pnum li').unbind().bind('click',function(){keyComboxE(this)});
-//    $('#pnum a').eq(0).unbind().bind('click',function(){toggleSel()});
-    //初始化商品搜索
-    //clearRecommendItems();
 
-
+    $('#phoneInput').show();
+    $('#softPhoneLoginBtn').hide();
+    $('#outPhoneBtn').show();
+    $('#pickupPhoneBtn').hide();
+    $('#shutdownPhoneBtn').hide();
+    $('#logoutBtn').show();
 }
 /*
  * 就绪（可外呼）  1
@@ -106,11 +98,25 @@ function onRinging(ani,dnsi,tollFreeNum,isOutBoound,company,province){
     $('#callContext').css({'width':30,'padding-left':0,'padding-right':0,'margin-right':'0'});
     $('#callContext .incoming').addClass('incoming_ac').show();
     $('#transferPhoneBtn').unbind();
+
+    $('#phoneInput').show();
+    $('#softPhoneLoginBtn').hide();
+    $('#outPhoneBtn').hide();
+    $('#pickupPhoneBtn').show();
+    $('#shutdownPhoneBtn').show();
+    $('#logoutBtn').show();
 }
 /*
  *进线通话状态  4
  */
 function onTalking(ani,dnsi,tollFreeNum,isOutBoound,company,province){
+    $('#phoneInput').show();
+    $('#softPhoneLoginBtn').hide();
+    $('#outPhoneBtn').hide();
+    $('#pickupPhoneBtn').hide();
+    $('#shutdownPhoneBtn').show();
+    $('#logoutBtn').show();
+
     $('#callContext').html('<span class="insure">'+ phone.insure+'</span><span class="incoming incoming_ac fl"></span>' +
         '<span class="callin fl">' +
         '<font id="time" class="time fl">' +
@@ -256,9 +262,13 @@ function onTalking(ani,dnsi,tollFreeNum,isOutBoound,company,province){
  * 呼出中 5
  */
 function onDialing(ani,dnsi,tollFreeNum,isOutBoound,company,province){
+    $('#phoneInput').show();
+    $('#softPhoneLoginBtn').hide();
     $('#outPhoneBtn').hide();
-    $('#pickupPhoneBtn').show();
-    $('#shutdomnPhoneBtn').show();
+    $('#pickupPhoneBtn').hide();
+    $('#shutdownPhoneBtn').show();
+    $('#logoutBtn').show();
+
     $('#callContext').css({'width':30,'padding-left':0,'padding-right':0,'margin-right':'0'});
     $('#callContext').html('<span class="insure">'+ phone.insure+'</span><span class="incoming incoming_ac fl"></span>' +
         '<span class="callin fl">' +
@@ -468,6 +478,12 @@ function offline(ani,dnsi,tollFreeNum,isOutBoound,company,province){
         $('#state').addClass('discombo');
     }
 
+    $('#phoneInput').hide();
+    $('#softPhoneLoginBtn').show();
+    $('#outPhoneBtn').hide();
+    $('#pickupPhoneBtn').hide();
+    $('#shutdownPhoneBtn').hide();
+    $('#logoutBtn').hide();
 }
 /*
  *callback通话状态

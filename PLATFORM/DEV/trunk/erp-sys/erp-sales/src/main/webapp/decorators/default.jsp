@@ -339,7 +339,7 @@ function getCallType(){
 
 </div>
 
-<div id="hook" class="easyui-window" title="通话结果" data-options="modal:true,shadow:true,closable:false,collapsible:false,minimizable:false,maximizable:false,resizable:false,closed:true,draggable:false" style="width:400px;">
+<div id="hook" class="easyui-window" title="通话结果" data-options="modal:true,shadow:true,closable:false,collapsible:false,minimizable:false,maximizable:false,resizable:false,closed:true,draggable:false" style="width:400px;display: none;">
     <%--<label id="hookMsg" style="color: #ff4500"></label>--%>
 <form id="h_hookForm" method="post">  
  <div class="form-tabs">

@@ -2,6 +2,7 @@ package com.chinadrtv.erp.sales.controller;
 
 import com.chinadrtv.erp.sales.dto.User;
 import com.chinadrtv.erp.sales.util.SessionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,8 +30,7 @@ public class LoginController extends BaseController {
     @ResponseBody
     public Map login(User user) {
         Map result = new HashMap();
-        if ("admin".equals(user.getUsername()) &&
-                "123456".equals(user.getPassword())) {
+        if (StringUtils.isNotBlank(user.getPassword()) && StringUtils.isNotBlank(user.getUsername()) && StringUtils.isNotBlank(user.getAgentNo())) {
             SessionUtils.set("user", user);
             result.put("code", 0);
         } else {

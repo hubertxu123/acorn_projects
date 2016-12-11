@@ -6,6 +6,7 @@ package com.chinadrtv.erp.sales.dto;
 public class User {
     private String username;
     private String password;
+    private String agentNo;
 
     public String getUsername() {
         return username;
@@ -21,5 +22,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getAgentNo() {
+        return agentNo;
+    }
+
+    public void setAgentNo(String agentNo) {
+        this.agentNo = agentNo;
     }
 }

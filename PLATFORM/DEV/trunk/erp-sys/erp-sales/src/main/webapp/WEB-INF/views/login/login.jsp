@@ -25,7 +25,7 @@
                 cache: false,
                 url: "/submit",
                 dataType: "json",
-                data: {username: $('#username').val(), password: $('#password').val()},
+                data: {username: $('#username').val(), password: $('#password').val(), agentNo: $('#agentNo').val()},
                 success: function (data) {
                     if (data.code == 0) {
                         window.location.href = "/index";
@@ -50,16 +50,17 @@
                 <div id="loginwidget">
                     <form name="login" autocomplete="off" novalidate="novalidate" target="_top">
                         <div id="loginError" class="loginError"></div>
-                        <div class="loginbox_container" onClick="document.login.username.focus();">
+
+                        <div class="loginbox_container">
                             <div id="usrn">
-                                <div><label for="username" class="zen-assistiveText">用户名</label>
-                                    <input id="username" placeholder="用户名" name="username" type="text" tabindex="1"
+                                <div><label for="username" class="zen-assistiveText">坐席工号</label>
+                                    <input id="username" placeholder="坐席工号" name="username" type="text" tabindex="1"
                                            class="input"/>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="loginbox_container" onclick="document.login.password.focus();">
+                        <div class="loginbox_container">
                             <div id="pswd">
                                 <div><label for="password" class="zen-assistiveText">密码</label>
                                     <input type="password" placeholder="密码" name="password" id="password" tabindex="2"
@@ -67,10 +68,21 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="loginbox_container">
                             <button type="button" onclick="formSubmit();" class="button" id="LoginButton" name="Login"><span class="label">登&nbsp;&nbsp;&nbsp;录</span>
                             </button>
                         </div>
+
+                        <div class="loginbox_container">
+                            <div id="ano">
+                                <div><label for="agentNo" class="zen-assistiveText">分机号</label>
+                                    <input id="agentNo" placeholder="分机号" name="agentNo" type="text" tabindex="1"
+                                           class="input"/>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="loginbox_container">
                             <div id="rem" class="wrapper_remember"><input type="checkbox" checked="checked"
                                                                           id="softphone" name="softphone">

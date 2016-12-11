@@ -44,6 +44,10 @@
 <%--</c:if>--%>
 
 <div id="head">
+    <input type="hidden" id="cti-username" value="${sessionScope.user.username}"/>
+    <input type="hidden" id="cti-password" value="${sessionScope.user.password}"/>
+    <input type="hidden" id="cti-agentNo" value="${sessionScope.user.agentNo}"/>
+
     <input type="hidden" id="cti_host" value="${sessionScope.cti_host}"/>
     <input type="hidden" id="cti_port" value="${sessionScope.cti_port}"/>
     <input type="hidden" id="cti_host_back" value="${sessionScope.cti_host_back}"/>
@@ -60,17 +64,18 @@
                     <!--
                     <a href="javascript:alert(phone.status);">++</a>
                         -->
-                    <button id="inbb">电话进线</button>
-                    <button id="interrupt" onclick="javascript:interrupt(phone.status);">断线</button>
-                    <button onclick="javascript: phone.changeStatus(-1);">摘机状态</button>
-                    <button onclick="javascript:bottomLeft('','','','');">左下</button>
-                    <button onclick="javascript:bottomRight('','','','');">右下</button>
+                    <%--<button id="inbb">电话进线</button>--%>
+                    <%--<button id="interrupt" onclick="javascript:interrupt(phone.status);">断线</button>--%>
+                    <%--<button onclick="javascript: phone.changeStatus(-1);">摘机状态</button>--%>
+                    <%--<button onclick="javascript:bottomLeft('','','','');">左下</button>--%>
+                    <%--<button onclick="javascript:bottomRight('','','','');">右下</button>--%>
                     <input type="text" id="phoneInput" style="display: none;"/>
                     <input type="text" name="callID" id="callID" value="" style="display:none;">
                     <input type="text" name="remoteID" id="remoteID" value="" style="display:none;">
+                    <button id="softPhoneLoginBtn" onclick="javascript:agentLogin();"  style="display: none;">软电话登录</button>
                     <button id="outPhoneBtn" onclick="javascript:outPhone();"  style="display: none;">呼叫</button>
                     <button id="pickupPhoneBtn" onclick="javascript:pickupPhone();"  style="display: none;">摘机</button>
-                    <button id="shutdomnPhoneBtn" onclick="javascript:shutdownPhone();"  style="display: none;">挂断</button>
+                    <button id="shutdownPhoneBtn" onclick="javascript:shutdownPhone();"  style="display: none;">挂断</button>
                     <button id="logoutBtn" onclick="javascript:agentBarLogout();">退出</button>
                     <%--<button onclick="javascript:muteOff();">关闭静音</button>--%>
 

@@ -50,15 +50,12 @@ function addAgentEvent() {
         $("#lblAgentState").html(getAgentStateText(agentState));
 
         if (agentState == "LOGIN") {
-            status = 2;
-            alert("CTI和软电话登录成功");
             onReady();
             startQueryTimer();
         }
 
         if (agentState == "LOGOUT") {
-            status = 1;
-            alert("软电话登录失败");
+            offline();
             stopQueryTimer();
         }
     });
@@ -114,8 +111,9 @@ function addCallEvent() {
 
         if (callState == "CS_INCOMING") {
             $("#callID").val(callID);
+            $("#phoneInput").val(callID);
             $("#remoteID").val(ani);
-            onDialing();
+            onRinging();
         }
         else if (callState == "CS_ORGINATED" && callCount == 1) {
             $("#callID").val(callID);
@@ -129,7 +127,6 @@ function addCallEvent() {
 
         if (callState == "CS_NONE" && callCount == 0) {
             $("#callID").val("");
-
             stopAnswerTimer();
         }
 
@@ -198,15 +195,11 @@ function addQueueEvent() {
 }
 
 
-var status = 0; //0 cti和软电话都未登录    1 cti登录软电话未登录     2 cti与软电话都登录
 function addSessionStatusChanged() {
     addEvent(plugin(), 'sessionStatusChanged', function (isConnected) {
         if (isConnected) {
-            alert("CTI已经登录成功");
-            status = 1;
-            agentLogin();
+            $("#softPhoneLoginBtn").show();
         }
-        else status = 0;
     });
 }
 
@@ -228,9 +221,9 @@ function doQuerySoftPhoneTimer() {
 }
 
 function agentLogin() {
-    var deviceID = "2905",
-        agentID = "1905",
-        password = "123";
+    var deviceID = $("#cti-agentNo").val(),
+        agentID = $("#cti-username").val(),
+        password = $("#cti-password").val();
 
     var result = plugin().agentLogin(deviceID, agentID, password);
     if (result != 1)
@@ -246,7 +239,6 @@ function outPhone() {
 
 function shutdownPhone() {
     var callID = getCallID();
-    alert("aa"+callID);
     if (callID != "")
         plugin().hangupCall(callID);
 }
@@ -259,10 +251,7 @@ function agentBarLogout() {
     var result = plugin().agentLogout();
 
     if (result == 1) {
-        alert("软电话退出成功");
-        status = 1;
-    }
-    else alert(result);
+    } else alert(result);
 }
 
 function pickupPhone() {
