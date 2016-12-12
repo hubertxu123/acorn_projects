@@ -269,7 +269,7 @@ var showccBut=false; //是否显现切换客户的button
 function initMain(){
     //设置首页为默认页
     tabsMap = new Map();
-    currentPanelObj = createPanel('home','false','/home/home','static');
+    currentPanelObj = createPanel('home','false', $("#ctxValue").val() + '/home/home','static');
     tabsMap.put('home',currentPanelObj);
     toggleEv();
 	$("#center .tabPage").each(function(){

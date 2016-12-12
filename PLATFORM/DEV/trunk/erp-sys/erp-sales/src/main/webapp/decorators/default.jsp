@@ -230,7 +230,8 @@ function getCallType(){
 <div id="wrapper" >
 	<!-- 顶部软电话 -->
 	<jsp:include page="/common/header.jsp" />
-  
+
+    <input id="ctxValue" type="hidden" value="${ctx}" />
   <div id="content" class="fn-scroll">
     <table id="AcornPhone" class="appTable"  border="0" cellspacing="0" cellpadding="0">
       <tr>

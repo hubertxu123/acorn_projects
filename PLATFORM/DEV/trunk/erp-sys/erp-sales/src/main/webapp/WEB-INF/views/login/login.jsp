@@ -23,12 +23,12 @@
                 type: "post",
                 async: false,
                 cache: false,
-                url: "/submit",
+                url: "${ctx}/submit",
                 dataType: "json",
                 data: {username: $('#username').val(), password: $('#password').val(), agentNo: $('#agentNo').val()},
                 success: function (data) {
                     if (data.code == 0) {
-                        window.location.href = "/index";
+                        window.location.href = "${ctx}/index";
                     } else {
                         $("#loginError").html(data.msg);
                     }
@@ -44,7 +44,7 @@
         <div id="right_side">
             <div id="login_component">
                 <div id="logo_wrapper"><img id="logo" class="logo_repository"
-                                            src="/static/images/logo_sales.png"
+                                            src="${ctx}/static/images/logo_sales.png"
                                             border="0"/>
                 </div>
                 <div id="loginwidget">
@@ -94,7 +94,7 @@
         </div>
         <div id="left_side">
             <div id="marketing">
-                <img src="/static/images/login_sales.jpg"/>
+                <img src="${ctx}/static/images/login_sales.jpg"/>
 
             </div>
         </div>

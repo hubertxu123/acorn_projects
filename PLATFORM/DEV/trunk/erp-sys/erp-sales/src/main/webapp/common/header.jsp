@@ -58,7 +58,7 @@
     <table class="appHeadBg" border="0" cellpadding="0" cellspacing="0">
         <tr>
             <td>
-                <img width="30" id="cti_onAndOff" height="30px" class="fl" style="vertical-align: middle" src="/static/images/phone-lamp-gray.png"/>
+                <img width="30" id="cti_onAndOff" height="30px" class="fl" style="vertical-align: middle" src="${ctx}/static/images/phone-lamp-gray.png"/>
                 <span class="logo" id="logo">销售管理系统
 
                     <!--
